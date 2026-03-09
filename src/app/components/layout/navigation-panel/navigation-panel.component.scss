@@ -244,7 +244,7 @@ $transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   width: 16px;
   height: 16px;
   stroke: var(--p-surface-400, #a0aec0);
-  transition: transform 0.2s ease;
+  transition: transform 0.35s ease;
   flex-shrink: 0;
 
   &.expanded {
@@ -256,7 +256,40 @@ $transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 .components-list {
   padding-left: 1rem;
   margin-top: 2px;
-  animation: slideDown 0.2s ease;
+  overflow: hidden;
+  animation: expandIn 0.4s ease forwards;
+
+  .component-item {
+    animation: fadeSlideIn 0.3s ease both;
+
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.06}s;
+      }
+    }
+  }
+}
+
+@keyframes expandIn {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .component-item {
