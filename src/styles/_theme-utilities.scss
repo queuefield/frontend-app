@@ -1,0 +1,217 @@
+// ============================================================
+// Theme Utility Classes
+// Uses CSS custom properties set by ThemeService from config.json
+// Usage: <span class="color-primary">text</span>
+// ============================================================
+
+// ----------------------------------------------------------
+// Color Utilities
+// .color-{name}        → text color
+// .bg-{name}           → background color
+// .border-color-{name} → border color
+// ----------------------------------------------------------
+
+// Primary
+.color-primary { color: var(--color-primary); }
+.color-primary-light { color: var(--color-primary-light); }
+.color-primary-dark { color: var(--color-primary-dark); }
+.bg-primary { background-color: var(--color-primary); }
+.bg-primary-light { background-color: var(--color-primary-light); }
+.bg-primary-dark { background-color: var(--color-primary-dark); }
+.border-color-primary { border-color: var(--color-primary); }
+.border-color-primary-light { border-color: var(--color-primary-light); }
+.border-color-primary-dark { border-color: var(--color-primary-dark); }
+
+// Secondary
+.color-secondary { color: var(--color-secondary); }
+.color-secondary-light { color: var(--color-secondary-light); }
+.color-secondary-dark { color: var(--color-secondary-dark); }
+.bg-secondary { background-color: var(--color-secondary); }
+.bg-secondary-light { background-color: var(--color-secondary-light); }
+.bg-secondary-dark { background-color: var(--color-secondary-dark); }
+.border-color-secondary { border-color: var(--color-secondary); }
+.border-color-secondary-light { border-color: var(--color-secondary-light); }
+.border-color-secondary-dark { border-color: var(--color-secondary-dark); }
+
+// Accent
+.color-accent { color: var(--color-accent); }
+.color-accent-light { color: var(--color-accent-light); }
+.color-accent-dark { color: var(--color-accent-dark); }
+.bg-accent { background-color: var(--color-accent); }
+.bg-accent-light { background-color: var(--color-accent-light); }
+.bg-accent-dark { background-color: var(--color-accent-dark); }
+.border-color-accent { border-color: var(--color-accent); }
+.border-color-accent-light { border-color: var(--color-accent-light); }
+.border-color-accent-dark { border-color: var(--color-accent-dark); }
+
+// Background & Surface
+.color-background { color: var(--color-background); }
+.color-background-light { color: var(--color-background-light); }
+.color-background-dark { color: var(--color-background-dark); }
+.bg-background { background-color: var(--color-background); }
+.bg-background-light { background-color: var(--color-background-light); }
+.bg-background-dark { background-color: var(--color-background-dark); }
+.color-surface { color: var(--color-surface); }
+.color-surface-light { color: var(--color-surface-light); }
+.color-surface-dark { color: var(--color-surface-dark); }
+.bg-surface { background-color: var(--color-surface); }
+.bg-surface-light { background-color: var(--color-surface-light); }
+.bg-surface-dark { background-color: var(--color-surface-dark); }
+
+// Text
+.color-text-primary { color: var(--color-text-primary); }
+.color-text-secondary { color: var(--color-text-secondary); }
+.color-text-disabled { color: var(--color-text-disabled); }
+.color-text-on-primary { color: var(--color-text-on-primary); }
+.color-text-on-secondary { color: var(--color-text-on-secondary); }
+
+// Status
+.color-success { color: var(--color-success); }
+.color-warning { color: var(--color-warning); }
+.color-error { color: var(--color-error); }
+.color-info { color: var(--color-info); }
+.bg-success { background-color: var(--color-success); }
+.bg-warning { background-color: var(--color-warning); }
+.bg-error { background-color: var(--color-error); }
+.bg-info { background-color: var(--color-info); }
+
+// Border
+.border-color-border { border-color: var(--color-border); }
+.border-color-border-light { border-color: var(--color-border-light); }
+.border-color-border-dark { border-color: var(--color-border-dark); }
+
+// ----------------------------------------------------------
+// Typography Utilities
+// ----------------------------------------------------------
+
+// Font Family
+.font-family { font-family: var(--font-family); }
+.font-family-heading { font-family: var(--font-family-heading); }
+.font-family-mono { font-family: var(--font-family-mono); }
+
+// Font Size
+.font-size-xs { font-size: var(--font-size-xs); }
+.font-size-sm { font-size: var(--font-size-sm); }
+.font-size-md { font-size: var(--font-size-md); }
+.font-size-lg { font-size: var(--font-size-lg); }
+.font-size-xl { font-size: var(--font-size-xl); }
+.font-size-2xl { font-size: var(--font-size-2xl); }
+.font-size-3xl { font-size: var(--font-size-3xl); }
+.font-size-4xl { font-size: var(--font-size-4xl); }
+
+// Font Weight
+.font-weight-light { font-weight: var(--font-weight-light); }
+.font-weight-normal { font-weight: var(--font-weight-normal); }
+.font-weight-medium { font-weight: var(--font-weight-medium); }
+.font-weight-semibold { font-weight: var(--font-weight-semibold); }
+.font-weight-bold { font-weight: var(--font-weight-bold); }
+
+// Line Height
+.line-height-tight { line-height: var(--line-height-tight); }
+.line-height-normal { line-height: var(--line-height-normal); }
+.line-height-relaxed { line-height: var(--line-height-relaxed); }
+.line-height-loose { line-height: var(--line-height-loose); }
+
+// Letter Spacing
+.letter-spacing-tight { letter-spacing: var(--letter-spacing-tight); }
+.letter-spacing-normal { letter-spacing: var(--letter-spacing-normal); }
+.letter-spacing-wide { letter-spacing: var(--letter-spacing-wide); }
+
+// ----------------------------------------------------------
+// Spacing Utilities
+// .p-{size}  → padding     .m-{size}  → margin
+// .px-{size} → inline      .mx-{size} → inline
+// .py-{size} → block       .my-{size} → block
+// .gap-{size} → gap
+// ----------------------------------------------------------
+
+.p-xs { padding: var(--xs); }
+.p-sm { padding: var(--sm); }
+.p-md { padding: var(--md); }
+.p-lg { padding: var(--lg); }
+.p-xl { padding: var(--xl); }
+.p-2xl { padding: var(--2xl); }
+.p-3xl { padding: var(--3xl); }
+.p-4xl { padding: var(--4xl); }
+
+.px-xs { padding-inline: var(--xs); }
+.px-sm { padding-inline: var(--sm); }
+.px-md { padding-inline: var(--md); }
+.px-lg { padding-inline: var(--lg); }
+.px-xl { padding-inline: var(--xl); }
+
+.py-xs { padding-block: var(--xs); }
+.py-sm { padding-block: var(--sm); }
+.py-md { padding-block: var(--md); }
+.py-lg { padding-block: var(--lg); }
+.py-xl { padding-block: var(--xl); }
+
+.m-xs { margin: var(--xs); }
+.m-sm { margin: var(--sm); }
+.m-md { margin: var(--md); }
+.m-lg { margin: var(--lg); }
+.m-xl { margin: var(--xl); }
+.m-2xl { margin: var(--2xl); }
+.m-3xl { margin: var(--3xl); }
+.m-4xl { margin: var(--4xl); }
+
+.mx-xs { margin-inline: var(--xs); }
+.mx-sm { margin-inline: var(--sm); }
+.mx-md { margin-inline: var(--md); }
+.mx-lg { margin-inline: var(--lg); }
+.mx-xl { margin-inline: var(--xl); }
+
+.my-xs { margin-block: var(--xs); }
+.my-sm { margin-block: var(--sm); }
+.my-md { margin-block: var(--md); }
+.my-lg { margin-block: var(--lg); }
+.my-xl { margin-block: var(--xl); }
+
+.gap-xs { gap: var(--xs); }
+.gap-sm { gap: var(--sm); }
+.gap-md { gap: var(--md); }
+.gap-lg { gap: var(--lg); }
+.gap-xl { gap: var(--xl); }
+
+// ----------------------------------------------------------
+// Border Radius Utilities
+// ----------------------------------------------------------
+
+.radius-none { border-radius: var(--radius-none); }
+.radius-sm { border-radius: var(--radius-sm); }
+.radius-md { border-radius: var(--radius-md); }
+.radius-lg { border-radius: var(--radius-lg); }
+.radius-xl { border-radius: var(--radius-xl); }
+.radius-full { border-radius: var(--radius-full); }
+
+// ----------------------------------------------------------
+// Shadow Utilities
+// ----------------------------------------------------------
+
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+.shadow-xl { box-shadow: var(--shadow-xl); }
+.shadow-2xl { box-shadow: var(--shadow-2xl); }
+
+// ----------------------------------------------------------
+// Effects Utilities
+// ----------------------------------------------------------
+
+// Transitions
+.transition-fast { transition: all var(--transition-fast); }
+.transition-base { transition: all var(--transition-base); }
+.transition-slow { transition: all var(--transition-slow); }
+
+// Opacity
+.opacity-disabled { opacity: var(--opacity-disabled); }
+.opacity-hover { opacity: var(--opacity-hover); }
+.opacity-active { opacity: var(--opacity-active); }
+
+// Z-Index
+.z-dropdown { z-index: var(--z-index-dropdown); }
+.z-sticky { z-index: var(--z-index-sticky); }
+.z-fixed { z-index: var(--z-index-fixed); }
+.z-modal { z-index: var(--z-index-modal); }
+.z-popover { z-index: var(--z-index-popover); }
+.z-tooltip { z-index: var(--z-index-tooltip); }
