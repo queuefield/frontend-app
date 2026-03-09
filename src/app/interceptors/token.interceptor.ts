@@ -1,0 +1,18 @@
+import { HttpInterceptorFn } from '@angular/common/http';
+
+export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
+  // Reading from localStorage directly to avoid circular dependency:
+  // AuthService -> HttpService -> HttpClient -> tokenInterceptor
+  const token = localStorage.getItem('auth_token');
+
+  if (token) {
+    const authReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return next(authReq);
+  }
+
+  return next(req);
+};

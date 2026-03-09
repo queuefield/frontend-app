@@ -1,0 +1,23 @@
+{
+  "common": {
+    "appName": "Angular Kickoff",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "language": "Langue"
+  },
+  "home": {
+    "title": "Bienvenue à la maison",
+    "subtitle": "Ceci est votre application Angular 20",
+    "profileButton": "Aller au profil",
+    "description": "Sélectionnez votre langue préférée depuis la page de profil"
+  },
+  "profile": {
+    "title": "Paramètres du profil",
+    "subtitle": "Gérez vos préférences",
+    "languageLabel": "Sélectionner la langue",
+    "languagePlaceholder": "Choisissez votre langue",
+    "backToHome": "Retour à l'accueil",
+    "currentLanguage": "Langue actuelle"
+  }
+}

@@ -1,0 +1,228 @@
+<!-- ═══════════════════════════════════════════════════════════════════════════ -->
+<!-- Grid Toolbar: Title, Global Search, Filters Button                      -->
+<!-- ═══════════════════════════════════════════════════════════════════════════ -->
+<div class="grid-toolbar">
+  <!-- Title -->
+  @if (title()) {
+    <h2 class="grid-toolbar__title">{{ title() }}</h2>
+  }
+
+  <div class="grid-toolbar__right">
+    <p-inputgroup>
+      <!-- Filters Button -->
+      @if (hasFilters()) {
+        <button
+          pButton
+          type="button"
+          (click)="filterPopover.toggle($event)"
+          [pTooltip]="filterTooltip()"
+          tooltipPosition="bottom"
+          [escape]="false"
+          class="grid-toolbar__filter-btn"
+        >
+          <div class="grid-toolbar__filter-content">
+            <i class="pi pi-filter"></i>
+            <span>Filters</span>
+            @if (filterCount() > 0) {
+              <span class="grid-toolbar__inline-badge">{{ filterCount() }}</span>
+            }
+          </div>
+        </button>
+
+        <!-- Filter Popover -->
+        <p-popover #filterPopover (onShow)="searchPanel.onPanelOpen()">
+          <app-grid-search-panel
+            #searchPanel
+            [filters]="filters()"
+            [initialFilters]="activeFilters()"
+            (applyFilters)="onApplyFilters($event)"
+            (resetFilters)="onResetFilters()"
+            (closePanel)="filterPopover.hide()"
+          />
+        </p-popover>
+      }
+
+      <!-- Global Search -->
+      <p-iconfield class="grid-toolbar__search-field">
+        <p-inputicon styleClass="pi pi-search" />
+        <input
+          pInputText
+          type="text"
+          [placeholder]="globalSearchPlaceholder()"
+          [value]="globalSearchValue()"
+          (input)="onGlobalSearchInput($event)"
+          class="grid-toolbar__search"
+        />
+      </p-iconfield>
+    </p-inputgroup>
+
+    <!-- Add & Export Actions positioned to the right of the Search Panel -->
+    @if (showAddBtn || showExportBtn) {
+      <div class="grid-toolbar__actions">
+        @if (showExportBtn) {
+          <button
+            pButton
+            type="button"
+            icon="pi pi-file-export"
+            label="Export"
+            (click)="onExportAction.emit()"
+            class="p-button-outlined p-button-secondary"
+          ></button>
+        }
+        @if (showAddBtn) {
+          <button
+            pButton
+            type="button"
+            icon="pi pi-plus"
+            label="Add"
+            (click)="onAddAction.emit()"
+          ></button>
+        }
+      </div>
+    }
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════════ -->
+<!-- PrimeNG Table                                                           -->
+<!-- ═══════════════════════════════════════════════════════════════════════════ -->
+<p-table
+  [value]="tableData()"
+  [paginator]="true"
+  [rows]="pageSize()"
+  [totalRecords]="totalRecords()"
+  [lazy]="mode() === 'lazy'"
+  (onLazyLoad)="onLazyLoad($event)"
+  (onPage)="onPageChange($event)"
+  [rowsPerPageOptions]="rowsPerPageOptions()"
+  [loading]="loading()"
+  [first]="first()"
+  [stripedRows]="true"
+  [scrollable]="true"
+  scrollHeight="flex"
+  [tableStyle]="{ 'min-width': '60rem' }"
+  styleClass="grid-table"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+>
+  <!-- Column Headers -->
+  <ng-template #header>
+    <tr>
+      @for (col of columns(); track col.header) {
+        <th [style.width]="col.width ?? 'auto'">
+          {{ col.header }}
+        </th>
+      }
+      @if (actions().length > 0 || showViewIcon) {
+        <th style="width: 90px; text-align: center">Actions</th>
+      }
+    </tr>
+  </ng-template>
+
+  <!-- Row Body -->
+  <ng-template #body let-row let-rowIndex="rowIndex">
+    <tr>
+      @for (col of columns(); track col.header) {
+        <td [style.width]="col.width ?? 'auto'">
+          <!-- Default (simple field) -->
+          @if (isSimpleField(col) && !col.customCell) {
+            <span
+              [class.clickable]="!!col.action"
+              (click)="col.action ? onCellClick(row, col) : null"
+            >
+              {{ getFieldValue(row, col) }}
+            </span>
+          }
+
+          <!-- Multi-label cell -->
+          @if (col.customCell === 'multiLabel') {
+            <div
+              class="multi-label"
+              [class.clickable]="!!col.action"
+              (click)="col.action ? onCellClick(row, col) : null"
+            >
+              @for (fl of getMultiLabelFields(col); track fl.label) {
+                <span
+                  [class.multi-label__navigator]="fl.custom === 'navigator'"
+                  [class.multi-label__icon]="fl.custom === 'icon'"
+                >
+                  {{ getFieldLabelValue(row, fl) }}
+                </span>
+              }
+            </div>
+          }
+
+          <!-- Tags cell -->
+          @if (col.customCell === 'tags') {
+            <div class="tags-cell">
+              @for (tag of getTagsList(row, col); track tag) {
+                <p-tag [value]="tag" [rounded]="true" severity="info" />
+              }
+            </div>
+          }
+        </td>
+      }
+
+      <!-- Actions Column -->
+      @if (actions().length > 0 || showViewIcon) {
+        <td style="width: 90px; text-align: center; white-space: nowrap;">
+          <!-- View Icon -->
+          @if (showViewIcon) {
+             <button
+               pButton
+               type="button"
+               icon="pi pi-eye"
+               [text]="true"
+               [rounded]="true"
+               severity="info"
+               (click)="onViewAction.emit(row)"
+               class="action-trigger action-trigger--view"
+               pTooltip="View Details"
+               tooltipPosition="top"
+             ></button>
+          }
+          
+          <!-- Three Dots Menu -->
+          @if (actions().length > 0) {
+            <button
+              type="button"
+              (click)="toggleActionMenu($event, row, actionPopover)"
+              class="action-trigger"
+            >
+              <i class="pi pi-ellipsis-v"></i>
+            </button>
+
+            <p-popover #actionPopover>
+              <div class="action-menu">
+                @for (action of getVisibleActions(row); track getActionLabel(action)) {
+                  <button
+                    pButton
+                    type="button"
+                    [label]="getActionLabel(action)"
+                    [icon]="getActionIcon(action)"
+                    [text]="true"
+                    (click)="onActionClick(action, row); actionPopover.hide()"
+                    class="action-menu__item"
+                    [class.action-menu__item--danger]="action.isDelete || action.isBlock"
+                  ></button>
+                }
+              </div>
+            </p-popover>
+          }
+        </td>
+      }
+    </tr>
+  </ng-template>
+
+  <!-- Empty State -->
+  <ng-template #emptymessage>
+    <tr>
+      <td [attr.colspan]="columns().length + (actions().length > 0 || showViewIcon ? 1 : 0)">
+        <div class="empty-state">
+          <i class="pi pi-inbox empty-state__icon"></i>
+          <p>No records found</p>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -1,0 +1,42 @@
+<div class="home-container">
+  <div class="hero-section">
+    <div class="content">
+      <h1 class="title">{{ title() }}</h1>
+      <p class="subtitle">{{ subtitle() }}</p>
+      <p class="description">{{ description() }}</p>
+      
+      <div class="config-info">
+        <div class="config-item">
+          <span class="config-label">Environment:</span>
+          <span class="config-value">{{ environment }}</span>
+        </div>
+        <div class="config-item">
+          <span class="config-label">Country:</span>
+          <span class="config-value">{{ country }}</span>
+        </div>
+        <div class="config-item">
+          <span class="config-label">Theme:</span>
+          <span class="config-value">{{ themeName }}</span>
+        </div>
+        <div class="config-item">
+          <span class="config-label">API:</span>
+          <span class="config-value">{{ apiBaseUrl }}</span>
+        </div>
+      </div>
+      
+      <button class="profile-button" (click)="navigateToProfile()">
+        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        {{ profileButtonText() }}
+      </button>
+    </div>
+    
+    <div class="decorative-elements">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+      <div class="circle circle-3"></div>
+    </div>
+  </div>
+</div>

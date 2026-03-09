@@ -1,0 +1,30 @@
+{
+  "common": {
+    "appName": "Angular Kickoff",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Welcome Home",
+    "subtitle": "This is your Angular 20 application",
+    "profileButton": "Go to Profile",
+    "description": "Select your preferred language from the profile page"
+  },
+  "profile": {
+    "title": "Profile Settings",
+    "subtitle": "Manage your preferences",
+    "languageLabel": "Select Language",
+    "languagePlaceholder": "Choose your language",
+    "backToHome": "Back to Home",
+    "currentLanguage": "Current Language"
+  },
+  "simCards": {
+    "simCardGSM": "GSM",
+    "providerSerial": "Provider Serial",
+    "contractNo": "Contract Number",
+    "provider": "Provider",
+    "status": "Status"
+  }
+}

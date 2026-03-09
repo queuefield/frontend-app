@@ -1,0 +1,30 @@
+{
+  "common": {
+    "appName": "أنجولار كيك أوف",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "close": "إغلاق",
+    "language": "اللغة"
+  },
+  "home": {
+    "title": "مرحباً بك في الصفحة الرئيسية",
+    "subtitle": "هذا هو تطبيق أنجولار 20 الخاص بك",
+    "profileButton": "الذهاب إلى الملف الشخصي",
+    "description": "اختر لغتك المفضلة من صفحة الملف الشخصي"
+  },
+  "profile": {
+    "title": "إعدادات الملف الشخصي",
+    "subtitle": "إدارة تفضيلاتك",
+    "languageLabel": "اختر اللغة",
+    "languagePlaceholder": "اختر لغتك",
+    "backToHome": "العودة إلى الصفحة الرئيسية",
+    "currentLanguage": "اللغة الحالية"
+  },
+  "simCards": {
+    "simCardGSM": "رقم الشريحة",
+    "providerSerial": "الرقم التسلسلي للمزود",
+    "contractNo": "رقم العقد",
+    "provider": "المزود",
+    "status": "الحالة"
+  }
+}
