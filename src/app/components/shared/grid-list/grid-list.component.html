@@ -1,84 +1,76 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-<!-- Grid Toolbar: Title, Global Search, Filters Button                      -->
+<!-- Grid Toolbar: Global Search (left), Filters + Export + Add (right)      -->
 <!-- ═══════════════════════════════════════════════════════════════════════════ -->
 <div class="grid-toolbar">
-  <!-- Title -->
-  @if (title()) {
-    <h2 class="grid-toolbar__title">{{ title() }}</h2>
-  }
+  <!-- Left: Global Search -->
+  <div class="grid-toolbar__left">
+    <div class="grid-toolbar__search-wrapper">
+      <i class="pi pi-search grid-toolbar__search-icon"></i>
+      <input
+        type="text"
+        [placeholder]="globalSearchPlaceholder()"
+        [value]="globalSearchValue()"
+        (input)="onGlobalSearchInput($event)"
+        class="grid-toolbar__search"
+      />
+      <span class="grid-toolbar__search-shortcut">⌘K</span>
+    </div>
+  </div>
 
+  <!-- Right: Filters, Export, Add -->
   <div class="grid-toolbar__right">
-    <p-inputgroup>
-      <!-- Filters Button -->
-      @if (hasFilters()) {
-        <button
-          pButton
-          type="button"
-          (click)="filterPopover.toggle($event)"
-          [pTooltip]="filterTooltip()"
-          tooltipPosition="bottom"
-          [escape]="false"
-          class="grid-toolbar__filter-btn"
-        >
-          <div class="grid-toolbar__filter-content">
-            <i class="pi pi-filter"></i>
-            <span>Filters</span>
-            @if (filterCount() > 0) {
-              <span class="grid-toolbar__inline-badge">{{ filterCount() }}</span>
-            }
-          </div>
-        </button>
+    <!-- Filters Button -->
+    @if (hasFilters()) {
+      <button
+        type="button"
+        (click)="filterPopover.toggle($event)"
+        [pTooltip]="filterTooltip()"
+        tooltipPosition="bottom"
+        [escape]="false"
+        class="grid-toolbar__filter-btn"
+      >
+        <i class="pi pi-sliders-h"></i>
+        <span>Filters</span>
+        @if (filterCount() > 0) {
+          <span class="grid-toolbar__inline-badge">{{ filterCount() }}</span>
+        }
+      </button>
 
-        <!-- Filter Popover -->
-        <p-popover #filterPopover (onShow)="searchPanel.onPanelOpen()">
-          <app-grid-search-panel
-            #searchPanel
-            [filters]="filters()"
-            [initialFilters]="activeFilters()"
-            (applyFilters)="onApplyFilters($event)"
-            (resetFilters)="onResetFilters()"
-            (closePanel)="filterPopover.hide()"
-          />
-        </p-popover>
-      }
-
-      <!-- Global Search -->
-      <p-iconfield class="grid-toolbar__search-field">
-        <p-inputicon styleClass="pi pi-search" />
-        <input
-          pInputText
-          type="text"
-          [placeholder]="globalSearchPlaceholder()"
-          [value]="globalSearchValue()"
-          (input)="onGlobalSearchInput($event)"
-          class="grid-toolbar__search"
+      <!-- Filter Popover -->
+      <p-popover #filterPopover (onShow)="searchPanel.onPanelOpen()">
+        <app-grid-search-panel
+          #searchPanel
+          [filters]="filters()"
+          [initialFilters]="activeFilters()"
+          (applyFilters)="onApplyFilters($event)"
+          (resetFilters)="onResetFilters()"
+          (closePanel)="filterPopover.hide()"
         />
-      </p-iconfield>
-    </p-inputgroup>
+      </p-popover>
+    }
 
-    <!-- Add & Export Actions positioned to the right of the Search Panel -->
-    @if (showAddBtn || showExportBtn) {
-      <div class="grid-toolbar__actions">
-        @if (showExportBtn) {
-          <button
-            pButton
-            type="button"
-            icon="pi pi-file-export"
-            label="Export"
-            (click)="onExportAction.emit()"
-            class="p-button-outlined p-button-secondary"
-          ></button>
-        }
-        @if (showAddBtn) {
-          <button
-            pButton
-            type="button"
-            icon="pi pi-plus"
-            label="Add"
-            (click)="onAddAction.emit()"
-          ></button>
-        }
-      </div>
+    <!-- Export Button -->
+    @if (showExportBtn) {
+      <button
+        type="button"
+        (click)="onExportAction.emit()"
+        class="grid-toolbar__export-btn"
+      >
+        <i class="pi pi-download"></i>
+        <span>Export</span>
+      </button>
+    }
+
+    <!-- Add Button -->
+    @if (showAddBtn) {
+      <button
+        type="button"
+        (click)="onAddAction.emit()"
+        class="grid-toolbar__add-btn"
+      >
+        <i class="pi pi-plus"></i>
+        <span>{{ options()['addLabel'] || 'Add' }}</span>
+      </button>
     }
   </div>
 </div>
@@ -97,7 +89,6 @@
   [rowsPerPageOptions]="rowsPerPageOptions()"
   [loading]="loading()"
   [first]="first()"
-  [stripedRows]="true"
   [scrollable]="true"
   scrollHeight="flex"
   [tableStyle]="{ 'min-width': '60rem' }"
@@ -169,17 +160,14 @@
           <!-- View Icon -->
           @if (showViewIcon) {
              <button
-               pButton
                type="button"
-               icon="pi pi-eye"
-               [text]="true"
-               [rounded]="true"
-               severity="info"
                (click)="onViewAction.emit(row)"
                class="action-trigger action-trigger--view"
                pTooltip="View Details"
                tooltipPosition="top"
-             ></button>
+             >
+               <i class="pi pi-eye"></i>
+             </button>
           }
           
           <!-- Three Dots Menu -->
