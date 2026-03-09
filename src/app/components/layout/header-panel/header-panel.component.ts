@@ -9,25 +9,6 @@ import { AuthService } from '../../../services/auth.service';
   template: `
     <header class="header-panel">
       <div class="header-content">
-        <!-- Toggle Button -->
-        <button
-          class="nav-toggle"
-          (click)="toggleNavPanel()"
-          [title]="isNavVisible() ? 'Hide Menu' : 'Show Menu'"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
-        </button>
-
         <div class="welcome-section">
           <h2 class="welcome-message">
             Welcome back, {{ currentUser()?.username || currentUser()?.email || 'User' }}!
@@ -119,7 +100,7 @@ import { AuthService } from '../../../services/auth.service';
         transition: var(--transition-base, 300ms cubic-bezier(0.4, 0, 0.2, 1));
 
         &:hover {
-          color: var(--color-primary, #667eea);
+          color: var(--color-primary, #E21D4B);
         }
       }
 
@@ -161,10 +142,10 @@ import { AuthService } from '../../../services/auth.service';
 
         &:hover {
           background: var(--color-background-light, #f7fafc);
-          border-color: var(--color-primary, #667eea);
+          border-color: var(--color-primary, #E21D4B);
 
           svg {
-            stroke: var(--color-primary, #667eea);
+            stroke: var(--color-primary, #E21D4B);
           }
         }
       }
@@ -186,35 +167,6 @@ import { AuthService } from '../../../services/auth.service';
         justify-content: center;
       }
 
-      .nav-toggle {
-        width: 40px;
-        height: 40px;
-        background: transparent;
-        border: 1px solid var(--color-border, #e2e8f0);
-        border-radius: var(--radius-md, 0.5rem);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: var(--transition-base, 300ms cubic-bezier(0.4, 0, 0.2, 1));
-        margin-right: var(--spacing-md, 1rem);
-
-        svg {
-          width: 20px;
-          height: 20px;
-          stroke: var(--color-text-secondary, #718096);
-        }
-
-        &:hover {
-          background: var(--color-background-light, #f7fafc);
-          border-color: var(--color-primary, #667eea);
-
-          svg {
-            stroke: var(--color-primary, #667eea);
-          }
-        }
-      }
-
       @media (max-width: 768px) {
         .header-content {
           padding: 0 var(--spacing-md, 1rem);
@@ -234,15 +186,9 @@ import { AuthService } from '../../../services/auth.service';
 export class HeaderPanelComponent {
   protected readonly breadcrumbs;
   protected readonly currentUser;
-  protected readonly isNavVisible;
 
   constructor(private navService: NavigationService, private authService: AuthService) {
     this.breadcrumbs = this.navService.breadcrumbs;
     this.currentUser = this.authService.currentUser;
-    this.isNavVisible = this.navService.isNavPanelVisible;
-  }
-
-  toggleNavPanel(): void {
-    this.navService.toggleNavPanel();
   }
 }

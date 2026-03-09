@@ -12,7 +12,7 @@ import { NavigationService } from '../../services/navigation.service';
     <div class="app-layout">
       <app-navigation-panel />
 
-      <div class="main-container" [class.nav-hidden]="!isNavVisible()">
+      <div class="main-container" [class.nav-collapsed]="!isNavVisible()">
         <app-header-panel />
 
         <main class="content-area">
@@ -36,8 +36,8 @@ import { NavigationService } from '../../services/navigation.service';
         flex-direction: column;
         transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-        &.nav-hidden {
-          margin-left: 0;
+        &.nav-collapsed {
+          margin-left: 70px;
         }
       }
 
@@ -52,18 +52,26 @@ import { NavigationService } from '../../services/navigation.service';
         margin-left: 0;
         margin-right: 250px;
 
-        &.nav-hidden {
-          margin-right: 0;
+        &.nav-collapsed {
+          margin-right: 70px;
         }
       }
 
       @media (max-width: 768px) {
         .main-container {
-          margin-left: 0;
+          margin-left: 70px;
+
+          &.nav-collapsed {
+            margin-left: 0;
+          }
         }
 
         :host-context([dir='rtl']) .main-container {
-          margin-right: 0;
+          margin-right: 70px;
+
+          &.nav-collapsed {
+            margin-right: 0;
+          }
         }
       }
     `,
