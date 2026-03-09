@@ -60,3 +60,8 @@ export interface ForgotPasswordResponse {
   success: boolean;
   message?: string;
 }
+
+export interface ResetPasswordResponse {
+  success: boolean;
+  message?: string;
+}
