@@ -51,3 +51,12 @@ export interface TokenData {
   expiry: number;
   rememberMe: boolean;
 }
+
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ForgotPasswordResponse {
+  success: boolean;
+  message?: string;
+}

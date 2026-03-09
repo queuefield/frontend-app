@@ -2,7 +2,7 @@ import { Injectable, signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from './http.service';
 import { AppConfigService } from './app-config.service';
-import { LoginRequest, LoginResponse, UserData, AuthState, TokenData } from '../models/auth.model';
+import { LoginRequest, LoginResponse, UserData, AuthState, TokenData, ForgotPasswordResponse } from '../models/auth.model';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({
@@ -132,6 +132,15 @@ export class AuthService {
       })
     );
   }
+
+  /**
+   * Forgot password — sends reset instructions to the user's email
+   */
+  forgotPassword(email: string): Observable<ForgotPasswordResponse> {
+    const endpoint = 'Security/ForgotPassword';
+    return this.httpService.post<ForgotPasswordResponse>(endpoint, { email });
+  }
+
 
   /**
    * Logout user
