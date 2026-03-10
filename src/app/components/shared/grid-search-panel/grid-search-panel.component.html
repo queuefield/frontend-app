@@ -1,203 +1,112 @@
 <div class="search-panel">
   <div class="search-panel__header">
-    <h3>Filters</h3>
+    <h3>Filter by</h3>
     <button
-      pButton
       type="button"
-      [text]="true"
-      severity="secondary"
-      icon="pi pi-times"
       (click)="closePanel.emit()"
       class="search-panel__close"
-    ></button>
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
   </div>
 
-  <!-- Fixed Filters (always visible) -->
-  <div class="search-panel__grid">
-    @for (filter of fixedFilters(); track filter.field) {
-      <div class="search-panel__field">
-        <label class="search-panel__label">{{ filter.field }}</label>
+  <!-- All Filters -->
+  <div class="search-panel__body">
+    <div class="search-panel__grid">
+      @for (filter of filters(); track filter.field) {
+        <div class="search-panel__field">
+          <label class="search-panel__label">{{ filter.field }}</label>
 
-        @switch (filter.type) {
-          @case (SearchInputTypes.text) {
-            <input
-              pInputText
-              [placeholder]="filter.field"
-              [ngModel]="searchValues()[filter.field]"
-              (ngModelChange)="updateValue(filter.field, $event)"
-              class="search-panel__input"
-            />
-          }
-
-          @case (SearchInputTypes.select) {
-            @if (filter.isMultiple) {
-              <p-multiselect
-                [options]="dropdownOptions()[filter.field] || filter.data || []"
-                [optionLabel]="getOptionLabel(filter)"
-                [optionValue]="getOptionValue(filter)"
+          @switch (filter.type) {
+            @case (SearchInputTypes.text) {
+              <input
+                pInputText
+                pSize="small"
+                [placeholder]="filter.field"
                 [ngModel]="searchValues()[filter.field]"
                 (ngModelChange)="updateValue(filter.field, $event)"
-                [placeholder]="'Select ' + filter.field"
-                display="chip"
-                [filter]="true"
-                appendTo="body"
-                class="search-panel__input"
-              />
-            } @else {
-              <p-select
-                [options]="dropdownOptions()[filter.field] || filter.data || []"
-                [optionLabel]="getOptionLabel(filter)"
-                [optionValue]="getOptionValue(filter)"
-                [ngModel]="searchValues()[filter.field]"
-                (ngModelChange)="updateValue(filter.field, $event)"
-                [placeholder]="'Select ' + filter.field"
-                appendTo="body"
                 class="search-panel__input"
               />
             }
-          }
 
-          @case (SearchInputTypes.choice) {
-            <p-autocomplete
-              [multiple]="filter.isMultiple ?? false"
-              [suggestions]="choiceSuggestions()[filter.field] || []"
-              (completeMethod)="onChoiceSearch($event, filter)"
-              [optionLabel]="getOptionLabel(filter)"
-              [ngModel]="searchValues()[filter.field]"
-              (ngModelChange)="updateValue(filter.field, $event)"
-              [placeholder]="'Search ' + filter.field"
-              [dropdown]="true"
-              appendTo="body"
-              class="search-panel__input"
-            />
-          }
-
-          @case (SearchInputTypes.date) {
-            <p-datepicker
-              [ngModel]="searchValues()[filter.field]"
-              (ngModelChange)="updateValue(filter.field, $event)"
-              selectionMode="range"
-              [placeholder]="'Select dates'"
-              dateFormat="dd/mm/yy"
-              [showIcon]="true"
-              appendTo="body"
-              class="search-panel__input"
-            />
-          }
-        }
-      </div>
-    }
-  </div>
-
-  <!-- Extra Filters (toggle) -->
-  @if (extraFilters().length > 0) {
-    <button
-      pButton
-      type="button"
-      [label]="showMore() ? 'Show Less' : 'More Filters (' + extraFilters().length + ')'"
-      [icon]="showMore() ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
-      [text]="true"
-      severity="secondary"
-      (click)="toggleMore()"
-      class="search-panel__toggle"
-    ></button>
-
-    @if (showMore()) {
-      <div class="search-panel__grid search-panel__grid--extra">
-        @for (filter of extraFilters(); track filter.field) {
-          <div class="search-panel__field">
-            <label class="search-panel__label">{{ filter.field }}</label>
-
-            @switch (filter.type) {
-              @case (SearchInputTypes.text) {
-                <input
-                  pInputText
-                  [placeholder]="filter.field"
-                  [ngModel]="searchValues()[filter.field]"
-                  (ngModelChange)="updateValue(filter.field, $event)"
-                  class="search-panel__input"
-                />
-              }
-
-              @case (SearchInputTypes.select) {
-                @if (filter.isMultiple) {
-                  <p-multiselect
-                    [options]="dropdownOptions()[filter.field] || filter.data || []"
-                    [optionLabel]="getOptionLabel(filter)"
-                    [optionValue]="getOptionValue(filter)"
-                    [ngModel]="searchValues()[filter.field]"
-                    (ngModelChange)="updateValue(filter.field, $event)"
-                    [placeholder]="'Select ' + filter.field"
-                    display="chip"
-                    [filter]="true"
-                    appendTo="body"
-                    class="search-panel__input"
-                  />
-                } @else {
-                  <p-select
-                    [options]="dropdownOptions()[filter.field] || filter.data || []"
-                    [optionLabel]="getOptionLabel(filter)"
-                    [optionValue]="getOptionValue(filter)"
-                    [ngModel]="searchValues()[filter.field]"
-                    (ngModelChange)="updateValue(filter.field, $event)"
-                    [placeholder]="'Select ' + filter.field"
-                    appendTo="body"
-                    class="search-panel__input"
-                  />
-                }
-              }
-
-              @case (SearchInputTypes.choice) {
-                <p-autocomplete
-                  [multiple]="filter.isMultiple ?? false"
-                  [suggestions]="choiceSuggestions()[filter.field] || []"
-                  (completeMethod)="onChoiceSearch($event, filter)"
+            @case (SearchInputTypes.select) {
+              @if (filter.isMultiple) {
+                <p-multiselect
+                  [options]="dropdownOptions()[filter.field] || filter.data || []"
                   [optionLabel]="getOptionLabel(filter)"
+                  [optionValue]="getOptionValue(filter)"
                   [ngModel]="searchValues()[filter.field]"
                   (ngModelChange)="updateValue(filter.field, $event)"
-                  [placeholder]="'Search ' + filter.field"
-                  [dropdown]="true"
+                  [placeholder]="'Select ' + filter.field.toLowerCase()"
+                  display="chip"
+                  [filter]="true"
                   appendTo="body"
+                  size="small"
                   class="search-panel__input"
                 />
-              }
-
-              @case (SearchInputTypes.date) {
-                <p-datepicker
+              } @else {
+                <p-select
+                  [options]="dropdownOptions()[filter.field] || filter.data || []"
+                  [optionLabel]="getOptionLabel(filter)"
+                  [optionValue]="getOptionValue(filter)"
                   [ngModel]="searchValues()[filter.field]"
                   (ngModelChange)="updateValue(filter.field, $event)"
-                  selectionMode="range"
-                  [placeholder]="'Select dates'"
-                  dateFormat="dd/mm/yy"
-                  [showIcon]="true"
+                  [placeholder]="'Select ' + filter.field.toLowerCase()"
                   appendTo="body"
+                  size="small"
                   class="search-panel__input"
                 />
               }
             }
-          </div>
-        }
-      </div>
-    }
-  }
+
+            @case (SearchInputTypes.choice) {
+              <p-autocomplete
+                [multiple]="filter.isMultiple ?? false"
+                [suggestions]="choiceSuggestions()[filter.field] || []"
+                (completeMethod)="onChoiceSearch($event, filter)"
+                [optionLabel]="getOptionLabel(filter)"
+                [ngModel]="searchValues()[filter.field]"
+                (ngModelChange)="updateValue(filter.field, $event)"
+                [placeholder]="'Search ' + filter.field.toLowerCase()"
+                [dropdown]="true"
+                appendTo="body"
+                size="small"
+                class="search-panel__input"
+              />
+            }
+
+            @case (SearchInputTypes.date) {
+              <p-datepicker
+                [ngModel]="searchValues()[filter.field]"
+                (ngModelChange)="updateValue(filter.field, $event)"
+                selectionMode="range"
+                [placeholder]="'Select dates'"
+                dateFormat="dd/mm/yy"
+                [showIcon]="true"
+                appendTo="body"
+                size="small"
+                class="search-panel__input"
+              />
+            }
+          }
+        </div>
+      }
+    </div>
+  </div>
 
   <!-- Action Buttons -->
   <div class="search-panel__actions">
-    <button
-      pButton
-      type="button"
-      label="Reset"
-      icon="pi pi-refresh"
-      severity="secondary"
-      [outlined]="true"
-      (click)="onReset()"
-    ></button>
-    <button
-      pButton
-      type="button"
-      label="Apply"
-      icon="pi pi-check"
-      (click)="onApply()"
-    ></button>
+    <button type="button" class="search-panel__btn search-panel__btn--cancel" (click)="closePanel.emit()">
+      Cancel
+    </button>
+    <button type="button" class="search-panel__btn search-panel__btn--reset" (click)="onReset()">
+      Reset
+    </button>
+    <button type="button" class="search-panel__btn search-panel__btn--apply" (click)="onApply()">
+      Apply Filters
+    </button>
   </div>
 </div>
