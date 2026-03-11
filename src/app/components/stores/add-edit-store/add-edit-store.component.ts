@@ -51,7 +51,7 @@ export class AddEditStoreComponent implements OnInit {
   categories = signal<any[]>([]);
   countries = signal<any[]>([]);
   regions = signal<any[]>([]);
-  cities = signal<any[]>([]);
+  citiesByRegion = signal<Record<string, any[]>>({});
   salesAgents = signal<any[]>([]);
   supportAgents = signal<any[]>([]);
   plans = signal<any[]>([]);
@@ -191,8 +191,7 @@ export class AddEditStoreComponent implements OnInit {
   private loadLookups(): void {
     this.lookupsService.getLookup(LookupType.Categories).subscribe(res => this.categories.set(res));
     this.lookupsService.getLookup(LookupType.Countries).subscribe(res => this.countries.set(res));
-    this.lookupsService.getLookup(LookupType.Regions).subscribe(res => this.regions.set(res));
-    this.lookupsService.getLookup(LookupType.Cities).subscribe(res => this.cities.set(res));
+    // Regions and cities are loaded dynamically based on selections
     this.lookupsService.getLookup(LookupType.SalesAgents).subscribe(res => this.salesAgents.set(res));
     this.lookupsService.getLookup(LookupType.SupportAgents).subscribe(res => this.supportAgents.set(res));
     this.lookupsService.getLookup(LookupType.Plans).subscribe(res => this.plans.set(res));
@@ -232,6 +231,17 @@ export class AddEditStoreComponent implements OnInit {
     // Add one default contact and branch
     this.addContact();
     this.addBranch();
+
+    // Fetch Regions when Country changes
+    this.storeForm.get('countryId')?.valueChanges.subscribe(countryId => {
+      if (countryId) {
+        this.lookupsService.getLookup(LookupType.Regions, countryId).subscribe(res => {
+          this.regions.set(res);
+        });
+      } else {
+        this.regions.set([]);
+      }
+    });
 
     // Bridge reactive form changes → signals
     this.storeForm.valueChanges.subscribe(() => this.updateValidationState());
@@ -352,10 +362,32 @@ export class AddEditStoreComponent implements OnInit {
 
     this.branches.push(branchGroup);
 
+    // Fetch Cities when Region changes for this branch
+    branchGroup.get('regionId')?.valueChanges.subscribe(regionId => {
+      if (regionId) {
+        this.loadCitiesForRegion(regionId);
+      }
+    });
+
+    if (data?.regionId) {
+      this.loadCitiesForRegion(data.regionId);
+    }
+
     // Expand the new branch
     const newSet = new Set(this.expandedBranches());
     newSet.add(this.branches.length - 1);
     this.expandedBranches.set(newSet);
+  }
+
+  loadCitiesForRegion(regionId: string | number): void {
+    if (this.citiesByRegion()[regionId.toString()]) return;
+
+    this.lookupsService.getLookup(LookupType.Cities, regionId).subscribe(res => {
+      this.citiesByRegion.update(prev => ({
+        ...prev,
+        [regionId.toString()]: res
+      }));
+    });
   }
 
   removeBranch(index: number): void {

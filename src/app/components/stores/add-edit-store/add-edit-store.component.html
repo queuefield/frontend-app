@@ -2,7 +2,7 @@
   <!-- Loading overlay -->
   @if (isLoading()) {
     <div class="add-edit-store__loading">
-      <i class="pi pi-spin pi-spinner" style="font-size: 2rem;"></i>
+      <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
     </div>
   }
 
@@ -39,11 +39,21 @@
         <div class="form-grid">
           <div class="form-field">
             <label>Store Name (English) <span class="required">*</span></label>
-            <input pInputText pSize="small" formControlName="nameEn" placeholder="Store name in English" />
+            <input
+              pInputText
+              pSize="small"
+              formControlName="nameEn"
+              placeholder="Store name in English"
+            />
           </div>
           <div class="form-field">
             <label>Store Name (Arabic) <span class="required">*</span></label>
-            <input pInputText pSize="small" formControlName="nameAr" placeholder="Store name in Arabic" />
+            <input
+              pInputText
+              pSize="small"
+              formControlName="nameAr"
+              placeholder="Store name in Arabic"
+            />
           </div>
           <div class="form-field">
             <label>Username <span class="required">*</span></label>
@@ -57,7 +67,7 @@
             <p-select
               formControlName="categoryId"
               [options]="categories()"
-              optionLabel="name"
+              optionLabel="nameEn"
               optionValue="id"
               placeholder="Select category"
               size="small"
@@ -78,7 +88,7 @@
             <p-select
               formControlName="countryId"
               [options]="countries()"
-              optionLabel="name"
+              optionLabel="nameEn"
               optionValue="id"
               placeholder="Select Country"
               size="small"
@@ -87,11 +97,21 @@
           </div>
           <div class="form-field">
             <label>Head Office Location <span class="required">*</span></label>
-            <input pInputText pSize="small" formControlName="headOfficeLocation" placeholder="Google maps link" />
+            <input
+              pInputText
+              pSize="small"
+              formControlName="headOfficeLocation"
+              placeholder="Google maps link"
+            />
           </div>
           <div class="form-field form-field--full">
             <label>Head Office Address <span class="required">*</span></label>
-            <input pInputText pSize="small" formControlName="headOfficeAddress" placeholder="Store Head Office Address" />
+            <input
+              pInputText
+              pSize="small"
+              formControlName="headOfficeAddress"
+              placeholder="Store Head Office Address"
+            />
           </div>
         </div>
       </section>
@@ -106,7 +126,11 @@
               <svg
                 class="collapsible-panel__chevron"
                 [class.expanded]="isContactExpanded(ci)"
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
               >
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
@@ -114,10 +138,23 @@
               <span class="collapsible-panel__badge">{{ ci + 1 }}</span>
 
               @if (contacts.length > 1) {
-                <button class="collapsible-panel__remove" (click)="removeContact(ci); $event.stopPropagation()" type="button" title="Remove contact">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <button
+                  class="collapsible-panel__remove"
+                  (click)="removeContact(ci); $event.stopPropagation()"
+                  type="button"
+                  title="Remove contact"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
                     <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <path
+                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                    ></path>
                   </svg>
                 </button>
               }
@@ -129,19 +166,39 @@
                 <div class="form-grid">
                   <div class="form-field">
                     <label>Contact Name <span class="required">*</span></label>
-                    <input pInputText pSize="small" formControlName="name" placeholder="Enter contact name" />
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="name"
+                      placeholder="Enter contact name"
+                    />
                   </div>
                   <div class="form-field">
                     <label>Contact Email <span class="required">*</span></label>
-                    <input pInputText pSize="small" formControlName="title" placeholder="Enter contact Email" />
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="title"
+                      placeholder="Enter contact Email"
+                    />
                   </div>
                   <div class="form-field">
                     <label>Contact Phone <span class="required">*</span></label>
-                    <input pInputText pSize="small" formControlName="phone" placeholder="Enter contact number" />
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="phone"
+                      placeholder="Enter contact number"
+                    />
                   </div>
                   <div class="form-field">
                     <label>Hotline</label>
-                    <input pInputText pSize="small" formControlName="hotline" placeholder="Enter hotline" />
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="hotline"
+                      placeholder="Enter hotline"
+                    />
                   </div>
                 </div>
               </div>
@@ -151,7 +208,13 @@
 
         <!-- Add Contact Button -->
         <button class="add-item-btn" (click)="addContact()" type="button">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
           </svg>
@@ -166,9 +229,13 @@
         <div class="tab-actions__right">
           @if (!canGoNext()) {
             <div class="validation-info-wrapper">
-              <button class="btn btn--info" (click)="toggleValidationInfo()" type="button" title="Show required fields">
-               <i class="pi pi-check"></i>
-
+              <button
+                class="btn btn--info"
+                (click)="toggleValidationInfo()"
+                type="button"
+                title="Show required fields"
+              >
+                <i class="pi pi-check"></i>
               </button>
               @if (showValidationInfo()) {
                 <div class="validation-popover">
@@ -179,7 +246,13 @@
                   <ul class="validation-popover__list">
                     @for (field of getInvalidFields(); track field) {
                       <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
                           <circle cx="12" cy="12" r="10"></circle>
                           <line x1="15" y1="9" x2="9" y2="15"></line>
                           <line x1="9" y1="9" x2="15" y2="15"></line>
@@ -192,7 +265,12 @@
               }
             </div>
           }
-          <button class="btn btn--primary" [disabled]="!canGoNext()" (click)="nextTab()" type="button">
+          <button
+            class="btn btn--primary"
+            [disabled]="!canGoNext()"
+            (click)="nextTab()"
+            type="button"
+          >
             Next
           </button>
         </div>
@@ -216,7 +294,7 @@
           <p-select
             formControlName="salesAgentId"
             [options]="salesAgents()"
-            optionLabel="name"
+            optionLabel="nameEn"
             optionValue="id"
             placeholder="Select Sales Agent"
             size="small"
@@ -228,7 +306,7 @@
           <p-select
             formControlName="supportAgentId"
             [options]="supportAgents()"
-            optionLabel="name"
+            optionLabel="nameEn"
             optionValue="id"
             placeholder="Select Support Agent"
             size="small"
@@ -240,7 +318,7 @@
           <p-select
             formControlName="planId"
             [options]="plans()"
-            optionLabel="name"
+            optionLabel="nameEn"
             optionValue="id"
             placeholder="Subscription Plan"
             size="small"
@@ -250,7 +328,7 @@
       </div>
 
       <!-- File Uploaders -->
-      <div class="form-grid" style="margin-top: 1.5rem;">
+      <div class="form-grid" style="margin-top: 1.5rem">
         <div class="form-field">
           <app-file-uploader
             header="Legal Documents"
@@ -282,9 +360,13 @@
         <div class="tab-actions__right">
           @if (!canGoNext()) {
             <div class="validation-info-wrapper">
-              <button class="btn btn--info" (click)="toggleValidationInfo()" type="button" title="Show required fields">
-           <i class="pi pi-check"></i>
-
+              <button
+                class="btn btn--info"
+                (click)="toggleValidationInfo()"
+                type="button"
+                title="Show required fields"
+              >
+                <i class="pi pi-check"></i>
               </button>
               @if (showValidationInfo()) {
                 <div class="validation-popover">
@@ -295,7 +377,13 @@
                   <ul class="validation-popover__list">
                     @for (field of getInvalidFields(); track field) {
                       <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
                           <circle cx="12" cy="12" r="10"></circle>
                           <line x1="15" y1="9" x2="9" y2="15"></line>
                           <line x1="9" y1="9" x2="15" y2="15"></line>
@@ -308,7 +396,12 @@
               }
             </div>
           }
-          <button class="btn btn--primary" [disabled]="!canGoNext()" (click)="nextTab()" type="button">
+          <button
+            class="btn btn--primary"
+            [disabled]="!canGoNext()"
+            (click)="nextTab()"
+            type="button"
+          >
             Next
           </button>
         </div>
@@ -335,7 +428,11 @@
               <svg
                 class="collapsible-panel__chevron"
                 [class.expanded]="isBranchExpanded(i)"
-                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
               >
                 <polyline points="6 9 12 15 18 9"></polyline>
               </svg>
@@ -343,10 +440,23 @@
               <span class="collapsible-panel__badge">{{ i + 1 }}</span>
 
               @if (branches.length > 1) {
-                <button class="collapsible-panel__remove" (click)="removeBranch(i); $event.stopPropagation()" type="button" title="Remove branch">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <button
+                  class="collapsible-panel__remove"
+                  (click)="removeBranch(i); $event.stopPropagation()"
+                  type="button"
+                  title="Remove branch"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
                     <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    <path
+                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+                    ></path>
                   </svg>
                 </button>
               }
@@ -358,30 +468,28 @@
                 <div class="form-grid">
                   <div class="form-field">
                     <label>Branch Name (English) <span class="required">*</span></label>
-                    <input pInputText pSize="small" formControlName="nameEn" placeholder="Branch name in English" />
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="nameEn"
+                      placeholder="Branch name in English"
+                    />
                   </div>
                   <div class="form-field">
                     <label>Branch Name (Arabic) <span class="required">*</span></label>
-                    <input pInputText pSize="small" formControlName="nameAr" placeholder="Branch name in Arabic" />
-                  </div>
-                  <div class="form-field">
-                    <label>City <span class="required">*</span></label>
-                    <p-select
-                      formControlName="cityId"
-                      [options]="cities()"
-                      optionLabel="name"
-                      optionValue="id"
-                      placeholder="Select City"
-                      size="small"
-                      [style]="{ width: '100%' }"
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="nameAr"
+                      placeholder="Branch name in Arabic"
                     />
                   </div>
                   <div class="form-field">
                     <label>Zone <span class="required">*</span></label>
                     <p-select
                       formControlName="regionId"
-                      [options]="zones()"
-                      optionLabel="name"
+                      [options]="regions()"
+                      optionLabel="nameEn"
                       optionValue="id"
                       placeholder="Select Zone"
                       size="small"
@@ -389,27 +497,65 @@
                     />
                   </div>
                   <div class="form-field">
+                    <label>City <span class="required">*</span></label>
+                    <p-select
+                      formControlName="cityId"
+                      [options]="citiesByRegion()[branch.get('regionId')?.value] || []"
+                      optionLabel="nameEn"
+                      optionValue="id"
+                      placeholder="Select City"
+                      size="small"
+                      [style]="{ width: '100%' }"
+                    />
+                  </div>
+
+                  <div class="form-field">
                     <label>Branch Address <span class="required">*</span></label>
-                    <input pInputText pSize="small" formControlName="address" placeholder="Branch Address" />
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="address"
+                      placeholder="Branch Address"
+                    />
                   </div>
                   <div class="form-field">
                     <label>Branch Location <span class="required">*</span></label>
-                    <input pInputText pSize="small" formControlName="location" placeholder="Google maps link" />
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="location"
+                      placeholder="Google maps link"
+                    />
                   </div>
                 </div>
 
-                <div class="form-grid form-grid--3col" style="margin-top: 1rem;">
+                <div class="form-grid form-grid--3col" style="margin-top: 1rem">
                   <div class="form-field">
                     <label>Contact Name <span class="required">*</span></label>
-                    <input pInputText pSize="small" formControlName="contactName" placeholder="Enter contact name" />
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="contactName"
+                      placeholder="Enter contact name"
+                    />
                   </div>
                   <div class="form-field">
                     <label>Contact Title <span class="required">*</span></label>
-                    <input pInputText pSize="small" formControlName="contactTitle" placeholder="Enter contact title" />
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="contactTitle"
+                      placeholder="Enter contact title"
+                    />
                   </div>
                   <div class="form-field">
                     <label>Contact Phone <span class="required">*</span></label>
-                    <input pInputText pSize="small" formControlName="contactPhone" placeholder="Enter contact number" />
+                    <input
+                      pInputText
+                      pSize="small"
+                      formControlName="contactPhone"
+                      placeholder="Enter contact number"
+                    />
                   </div>
                 </div>
               </div>
@@ -420,7 +566,13 @@
 
       <!-- Add Branch Button -->
       <button class="add-item-btn" (click)="addBranch()" type="button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
           <line x1="12" y1="5" x2="12" y2="19"></line>
           <line x1="5" y1="12" x2="19" y2="12"></line>
         </svg>
@@ -434,9 +586,13 @@
         <div class="tab-actions__right">
           @if (!canSave()) {
             <div class="validation-info-wrapper">
-              <button class="btn btn--info" (click)="toggleValidationInfo()" type="button" title="Show required fields">
-            <i class="pi pi-check"></i>
-
+              <button
+                class="btn btn--info"
+                (click)="toggleValidationInfo()"
+                type="button"
+                title="Show required fields"
+              >
+                <i class="pi pi-check"></i>
               </button>
               @if (showValidationInfo()) {
                 <div class="validation-popover">
@@ -447,7 +603,13 @@
                   <ul class="validation-popover__list">
                     @for (field of getInvalidFields(); track field) {
                       <li>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                        >
                           <circle cx="12" cy="12" r="10"></circle>
                           <line x1="15" y1="9" x2="9" y2="15"></line>
                           <line x1="9" y1="9" x2="15" y2="15"></line>
@@ -462,7 +624,7 @@
           }
           <button class="btn btn--primary" [disabled]="!canSave()" (click)="onSave()" type="button">
             @if (isSaving()) {
-              <i class="pi pi-spin pi-spinner" style="margin-right: 0.5rem;"></i>
+              <i class="pi pi-spin pi-spinner" style="margin-right: 0.5rem"></i>
             }
             Save
           </button>

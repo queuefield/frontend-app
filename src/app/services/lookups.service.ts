@@ -23,21 +23,21 @@ export class LookupsService {
   private http = inject(HttpService);
   private configService = inject(AppConfigService);
   private readonly STORAGE_PREFIX = 'lookup_data_';
-  private requestCache = new Map<LookupType, Observable<any[]>>();
+  private requestCache = new Map<string, Observable<any[]>>();
 
   // Map each lookup type to its specific API url.
   // Replace these placeholder URLs with your actual endpoints.
   private readonly URL_MAP: Record<LookupType, string> = {
-    [LookupType.Categories]: '/api/v1/categories/dropdown',
-    [LookupType.Countries]: 'api/v1/country/active',
-    [LookupType.Regions]: 'api/v1/region/active',
-    [LookupType.Cities]: 'api/v1/city/active',
-    [LookupType.SalesAgents]: 'api/v1/agent/active',
-    [LookupType.SupportAgents]: 'api/v1/agent/active',
-    [LookupType.Plans]: 'api/v1/subscriptionplan/active',
-    [LookupType.Sources]: 'api/v1/lead/source/active',
-    [LookupType.Statuses]: 'api/v1/system/status/active',
-    [LookupType.Zones]: 'api/v1/zone/active'
+    [LookupType.Categories]: '/api/v1/tenant/categories',
+    [LookupType.Countries]: '/api/v1/country/active',
+    [LookupType.Regions]: '/api/v1/region/by-country',
+    [LookupType.Cities]: '/api/v1/city/by-region',
+    [LookupType.SalesAgents]: '/api/v1/user/sales',
+    [LookupType.SupportAgents]: '/api/v1/user/support',
+    [LookupType.Plans]: '/api/v1/subscriptionplan/active',
+    [LookupType.Sources]: '/api/v1/tenant/sources',
+    [LookupType.Statuses]: '/api/v1/tenant/statues',
+    [LookupType.Zones]: '/api/v1/tenant/statues'
   };
 
   private getApiUrl(lookupType: LookupType): string {
@@ -48,12 +48,14 @@ export class LookupsService {
    * Gets lookup data. Checks local storage first, then API.
    * Caches the API response in localStorage for subsequent calls.
    */
-  getLookup(lookupType: LookupType): Observable<any[]> {
+  getLookup(lookupType: LookupType, parentId?: string | number): Observable<any[]> {
     const shouldCache = this.configService.isFeatureEnabled('cacheLookups');
+    const cacheKey = this.STORAGE_PREFIX + lookupType + (parentId ? `_${parentId}` : '');
+    const requestKey = lookupType + (parentId ? `_${parentId}` : '');
 
     // 1. Check local storage if caching is enabled
     if (shouldCache) {
-      const cachedData = localStorage.getItem(this.STORAGE_PREFIX + lookupType);
+      const cachedData = localStorage.getItem(cacheKey);
       if (cachedData) {
         try {
           const parsed = JSON.parse(cachedData);
@@ -67,17 +69,22 @@ export class LookupsService {
     }
 
     // 2. Check if a request is already in progress to avoid duplicate calls
-    if (this.requestCache.has(lookupType)) {
-      return this.requestCache.get(lookupType)!;
+    if (this.requestCache.has(requestKey)) {
+      return this.requestCache.get(requestKey)!;
     }
 
     // 3. Fetch from API
-    const request$ = this.http.get<any>(this.getApiUrl(lookupType)).pipe(
+    let url = this.getApiUrl(lookupType);
+    if (parentId !== undefined && parentId !== null) {
+      url = `${url}/${parentId}`;
+    }
+
+    const request$ = this.http.get<any>(url).pipe(
       map(res => res?.data || res || []),
       tap((data: any[]) => {
         // Store in local storage if caching is enabled
         if (shouldCache) {
-          localStorage.setItem(this.STORAGE_PREFIX + lookupType, JSON.stringify(data));
+          localStorage.setItem(cacheKey, JSON.stringify(data));
         }
       }),
       catchError(err => {
@@ -87,12 +94,12 @@ export class LookupsService {
       shareReplay(1)
     );
 
-    this.requestCache.set(lookupType, request$);
+    this.requestCache.set(requestKey, request$);
 
     // Clear request cache after it completes so subsequent hard-refreshes work
     request$.subscribe({
-      next: () => this.requestCache.delete(lookupType),
-      error: () => this.requestCache.delete(lookupType)
+      next: () => this.requestCache.delete(requestKey),
+      error: () => this.requestCache.delete(requestKey)
     });
 
     return request$;
