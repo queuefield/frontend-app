@@ -10,6 +10,9 @@ import { RolesComponent } from './components/roles/roles.component';
 import { GeneralSettingsComponent } from './components/settings/general-settings.component';
 import { SecuritySettingsComponent } from './components/settings/security-settings.component';
 import { NotificationsSettingsComponent } from './components/settings/notifications-settings.component';
+import { StoresListComponent } from './components/stores/stores-list.component';
+import { BranchesListComponent } from './components/stores/branches-list.component';
+import { AddEditStoreComponent } from './components/stores/add-edit-store/add-edit-store.component';
 import { authGuard } from './guards/auth.guard';
 import { loginGuard } from './guards/login.guard';
 
@@ -42,6 +45,10 @@ export const routes: Routes = [
       { path: 'settings/general', component: GeneralSettingsComponent },
       { path: 'settings/security', component: SecuritySettingsComponent },
       { path: 'settings/notifications', component: NotificationsSettingsComponent },
+      { path: 'stores', component: StoresListComponent },
+      { path: 'stores/add', component: AddEditStoreComponent },
+      { path: 'stores/edit/:id', component: AddEditStoreComponent },
+      { path: 'branches', component: BranchesListComponent },
     ],
   },
   { path: '**', redirectTo: '' },

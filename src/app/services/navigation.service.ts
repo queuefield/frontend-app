@@ -46,6 +46,16 @@ export class NavigationService {
         { name: 'Notifications', icon: 'bell', url: '/settings/notifications', displayOrder: 3 },
       ],
     },
+    {
+      id: 'stores',
+      name: 'Stores',
+      icon: 'shopping-bag',
+      displayOrder: 4,
+      components: [
+        { name: 'Stores', icon: 'store', url: '/stores', displayOrder: 1 },
+        { name: 'Branches', icon: 'map-pin', url: '/branches', displayOrder: 2 },
+      ],
+    },
   ]);
 
   // Navigation state
