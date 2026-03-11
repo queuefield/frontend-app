@@ -15,7 +15,7 @@
     "enableDebugMode": false
   },
   "application": {
-    "name": "Angular Kickoff",
+    "name": "Storru",
     "version": "1.0.0",
     "supportEmail": "support@production.com",
     "maxUploadSize": 10485760,

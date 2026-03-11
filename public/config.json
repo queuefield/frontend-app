@@ -16,7 +16,7 @@
     "cacheLookups": false
   },
   "application": {
-    "name": "Angular Kickoff",
+    "name": "Storru",
     "version": "1.0.0",
     "supportEmail": "support@example.com",
     "maxUploadSize": 10485760,

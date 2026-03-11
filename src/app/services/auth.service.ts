@@ -118,14 +118,17 @@ export class AuthService {
   login(credentials: LoginRequest): Observable<LoginResponse> {
     const endpoint = this.configService.getLoginEndpoint();
     return this.httpService.post<LoginResponse>(endpoint, credentials).pipe(
-      tap((response) => {
+      tap((response: LoginResponse) => {
         if (response.success) {
           const userdata: UserData = {
-            id: response.data?.id,
+            id: response.data?.userId,
             name: response.data?.name,
-            email: response.data?.email,
+            email: response.data?.username,
             phone: response.data?.phone,
             role: response.data?.role,
+            userType: response.data?.userType,
+            tenantId: response.data?.tenantId,
+            refreshToken: response.data?.refreshToken,
           };
           this.storeAuthData(response.data.token, userdata, credentials.rememberMe || false);
         }

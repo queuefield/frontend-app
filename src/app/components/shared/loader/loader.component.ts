@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { LoaderService } from '../../../services/loader.service';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-loader',
-  imports: [ProgressSpinnerModule, NgIf],
+  imports: [ProgressSpinnerModule],
   templateUrl: './loader.component.html',
   styleUrl: './loader.component.scss'
 })

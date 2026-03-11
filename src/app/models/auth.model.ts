@@ -25,6 +25,10 @@ export interface UserData {
   lastName?: string;
   role?: string;
   permissions?: string[];
+  userId?: string;
+  userType?: string;
+  tenantId?: string;
+  refreshToken?: string;
   [key: string]: any; // Allow additional properties
 }
 

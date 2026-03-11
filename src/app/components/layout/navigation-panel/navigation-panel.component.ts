@@ -34,6 +34,8 @@ export class NavigationPanelComponent {
     this.isVisible = this.navService.isNavPanelVisible;
     this.filteredModules = this.navService.filteredModules;
     this.currentUser = this.authService.currentUser;
+    console.log(this.currentUser());
+    
     this.appName = this.configService.getApplicationName();
     this.showLogout = this.configService.isLoginRequired();
   }

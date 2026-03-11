@@ -28,7 +28,7 @@ This file is loaded at application startup before any components are initialized
     "enableDebugMode": true
   },
   "application": {
-    "name": "Angular Kickoff",
+    "name": "Storru",
     "version": "1.0.0",
     "supportEmail": "support@example.com",
     "maxUploadSize": 10485760,
