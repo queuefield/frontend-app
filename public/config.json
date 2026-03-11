@@ -4,10 +4,10 @@
   "locale": "en-US",
   "timezone": "America/New_York",
   "apiUrls": {
-    "baseUrl": "https://api.test.ic.afaqydev.me/",
-    "authUrl": "https://api.test.ic.afaqydev.me/",
-    "userUrl": "https://api.test.ic.afaqydev.me/",
-    "dataUrl": "https://api.test.ic.afaqydev.me/"
+    "baseUrl": "https://api.dev.storru.com/",
+    "authUrl": "https://api.dev.storru.com/",
+    "userUrl": "https://api.dev.storru.com/",
+    "dataUrl": "https://api.dev.storru.com/"
   },
   "features": {
     "enableAnalytics": true,
@@ -123,6 +123,6 @@
     "loginMethod": "username",
     "showRememberMe": true,
     "tokenExpiryHours": 24,
-    "loginEndpoint": "Security/LoginIC"
+    "loginEndpoint": "api/v1/customer/auth/login"
   }
 }

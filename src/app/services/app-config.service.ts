@@ -195,6 +195,6 @@ export class AppConfigService {
    * Get login endpoint
    */
   getLoginEndpoint(): string {
-    return this.config()?.authentication.loginEndpoint || 'Security/LoginIC';
+    return this.config()?.authentication.loginEndpoint || 'api/v1/customer/auth/login';
   }
 }
