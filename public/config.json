@@ -12,7 +12,8 @@
   "features": {
     "enableAnalytics": true,
     "enableLogging": true,
-    "enableDebugMode": true
+    "enableDebugMode": true,
+    "cacheLookups": true
   },
   "application": {
     "name": "Angular Kickoff",

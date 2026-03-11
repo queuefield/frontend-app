@@ -8,6 +8,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { ButtonModule } from 'primeng/button';
 import { FileUploaderComponent } from '../../shared/file-uploader/file-uploader.component';
 import { TenantService } from '../../../services/tenant.service';
+import { LookupsService, LookupType } from '../../../services/lookups.service';
 
 @Component({
   selector: 'app-add-edit-store',
@@ -29,6 +30,7 @@ export class AddEditStoreComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private tenantService = inject(TenantService);
+  private lookupsService = inject(LookupsService);
 
   // State
   activeTab = signal(0);
@@ -45,74 +47,17 @@ export class AddEditStoreComponent implements OnInit {
   // Tab labels
   tabs = ['Store Main Info', 'Legal Info', 'Branches'];
 
-  // Dropdown options (mock data – replace with real API calls)
-  categories = [
-    { id: 1, name: 'Restaurant' },
-    { id: 2, name: 'Retail' },
-    { id: 3, name: 'Grocery' },
-    { id: 4, name: 'Pharmacy' },
-    { id: 5, name: 'Electronics' },
-  ];
-
-  countries = [
-    { id: 1, name: 'Egypt' },
-    { id: 2, name: 'Saudi Arabia' },
-    { id: 3, name: 'UAE' },
-    { id: 4, name: 'Jordan' },
-    { id: 5, name: 'Kuwait' },
-  ];
-
-  regions = [
-    { id: 1, name: 'Central' },
-    { id: 2, name: 'North' },
-    { id: 3, name: 'South' },
-    { id: 4, name: 'East' },
-    { id: 5, name: 'West' },
-  ];
-
-  cities = [
-    { id: 1, name: 'Cairo' },
-    { id: 2, name: 'Riyadh' },
-    { id: 3, name: 'Dubai' },
-    { id: 4, name: 'Amman' },
-    { id: 5, name: 'Kuwait City' },
-  ];
-
-  salesAgents = [
-    { id: 1, name: 'Agent A' },
-    { id: 2, name: 'Agent B' },
-    { id: 3, name: 'Agent C' },
-  ];
-
-  supportAgents = [
-    { id: 1, name: 'Support A' },
-    { id: 2, name: 'Support B' },
-    { id: 3, name: 'Support C' },
-  ];
-
-  plans = [
-    { id: 1, name: 'Basic' },
-    { id: 2, name: 'Standard' },
-    { id: 3, name: 'Premium' },
-  ];
-
-  sources = [
-    { id: 1, name: 'Website' },
-    { id: 2, name: 'Referral' },
-    { id: 3, name: 'Sales Team' },
-  ];
-
-  statuses = [
-    { id: 1, name: 'Active' },
-    { id: 2, name: 'Inactive' },
-    { id: 3, name: 'Pending' },
-  ];
-
-  zones = [
-    { id: 1, name: 'Zone A' },
-    { id: 2, name: 'Zone B' },
-    { id: 3, name: 'Zone C' },
-  ];
+  // Dropdown options loaded from LookupsService
+  categories = signal<any[]>([]);
+  countries = signal<any[]>([]);
+  regions = signal<any[]>([]);
+  cities = signal<any[]>([]);
+  salesAgents = signal<any[]>([]);
+  supportAgents = signal<any[]>([]);
+  plans = signal<any[]>([]);
+  sources = signal<any[]>([]);
+  statuses = signal<any[]>([]);
+  zones = signal<any[]>([]);
 
   // ── Forms ──
   storeForm!: FormGroup;
@@ -232,6 +177,7 @@ export class AddEditStoreComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForms();
+    this.loadLookups();
 
     // Check edit mode
     const idParam = this.route.snapshot.paramMap.get('id');
@@ -240,6 +186,19 @@ export class AddEditStoreComponent implements OnInit {
       this.editId.set(Number(idParam));
       this.loadTenant(Number(idParam));
     }
+  }
+
+  private loadLookups(): void {
+    this.lookupsService.getLookup(LookupType.Categories).subscribe(res => this.categories.set(res));
+    this.lookupsService.getLookup(LookupType.Countries).subscribe(res => this.countries.set(res));
+    this.lookupsService.getLookup(LookupType.Regions).subscribe(res => this.regions.set(res));
+    this.lookupsService.getLookup(LookupType.Cities).subscribe(res => this.cities.set(res));
+    this.lookupsService.getLookup(LookupType.SalesAgents).subscribe(res => this.salesAgents.set(res));
+    this.lookupsService.getLookup(LookupType.SupportAgents).subscribe(res => this.supportAgents.set(res));
+    this.lookupsService.getLookup(LookupType.Plans).subscribe(res => this.plans.set(res));
+    this.lookupsService.getLookup(LookupType.Sources).subscribe(res => this.sources.set(res));
+    this.lookupsService.getLookup(LookupType.Statuses).subscribe(res => this.statuses.set(res));
+    this.lookupsService.getLookup(LookupType.Zones).subscribe(res => this.zones.set(res));
   }
 
   private initForms(): void {

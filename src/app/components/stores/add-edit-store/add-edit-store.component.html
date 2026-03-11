@@ -56,7 +56,7 @@
             <label>Store Category <span class="required">*</span></label>
             <p-select
               formControlName="categoryId"
-              [options]="categories"
+              [options]="categories()"
               optionLabel="name"
               optionValue="id"
               placeholder="Select category"
@@ -77,7 +77,7 @@
             <label>Country <span class="required">*</span></label>
             <p-select
               formControlName="countryId"
-              [options]="countries"
+              [options]="countries()"
               optionLabel="name"
               optionValue="id"
               placeholder="Select Country"
@@ -218,7 +218,7 @@
           <label>Sales Agent <span class="required">*</span></label>
           <p-select
             formControlName="salesAgentId"
-            [options]="salesAgents"
+            [options]="salesAgents()"
             optionLabel="name"
             optionValue="id"
             placeholder="Select Sales Agent"
@@ -230,7 +230,7 @@
           <label>Support Agent <span class="required">*</span></label>
           <p-select
             formControlName="supportAgentId"
-            [options]="supportAgents"
+            [options]="supportAgents()"
             optionLabel="name"
             optionValue="id"
             placeholder="Select Support Agent"
@@ -242,7 +242,7 @@
           <label>Subscription Plan <span class="required">*</span></label>
           <p-select
             formControlName="planId"
-            [options]="plans"
+            [options]="plans()"
             optionLabel="name"
             optionValue="id"
             placeholder="Subscription Plan"
@@ -374,7 +374,7 @@
                     <label>City <span class="required">*</span></label>
                     <p-select
                       formControlName="cityId"
-                      [options]="cities"
+                      [options]="cities()"
                       optionLabel="name"
                       optionValue="id"
                       placeholder="Select City"
@@ -386,7 +386,7 @@
                     <label>Zone <span class="required">*</span></label>
                     <p-select
                       formControlName="regionId"
-                      [options]="zones"
+                      [options]="zones()"
                       optionLabel="name"
                       optionValue="id"
                       placeholder="Select Zone"

@@ -9,6 +9,7 @@ export interface Features {
   enableAnalytics: boolean;
   enableLogging: boolean;
   enableDebugMode: boolean;
+  cacheLookups: boolean;
 }
 
 export interface ApplicationInfo {
