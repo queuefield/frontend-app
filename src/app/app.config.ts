@@ -8,6 +8,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { tokenInterceptor } from './interceptors/token.interceptor';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { MessageService } from 'primeng/api';
+import { apiResponseInterceptor } from './interceptors/api-response.interceptor';
 
 /**
  * Factory function to initialize app configuration and theme
@@ -23,7 +25,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideHttpClient(withInterceptors([tokenInterceptor])),
+    provideHttpClient(withInterceptors([tokenInterceptor, apiResponseInterceptor])),
     provideRouter(routes),
     {
       provide: APP_INITIALIZER,
@@ -31,7 +33,8 @@ export const appConfig: ApplicationConfig = {
       deps: [AppConfigService, ThemeService],
       multi: true
     },
-     providePrimeNG({
+    MessageService,
+    providePrimeNG({
             theme: {
                 preset: Aura
             }
