@@ -10,6 +10,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { MessageService } from 'primeng/api';
 import { apiResponseInterceptor } from './interceptors/api-response.interceptor';
+import { apiLoaderInterceptor } from './interceptors/api-loader.interceptor';
 
 /**
  * Factory function to initialize app configuration and theme
@@ -25,7 +26,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideHttpClient(withInterceptors([tokenInterceptor, apiResponseInterceptor])),
+    provideHttpClient(withInterceptors([tokenInterceptor, apiLoaderInterceptor, apiResponseInterceptor])),
     provideRouter(routes),
     {
       provide: APP_INITIALIZER,
