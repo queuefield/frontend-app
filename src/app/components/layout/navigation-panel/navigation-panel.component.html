@@ -49,90 +49,137 @@
           <div class="popover-submenu">
             <div class="popover-submenu__title">{{ module.name }}</div>
             @for (component of module.components; track component.url) {
-              <div
+              <a
                 class="popover-submenu__item"
+                [routerLink]="component.url"
                 [class.active]="isComponentActive(component.url)"
-                (click)="navigateFromPopover(component.url, modulePopover)"
+                (click)="modulePopover.hide()"
               >
                 <span class="component-dot"></span>
                 <span>{{ component.name }}</span>
-              </div>
+              </a>
             }
           </div>
         </p-popover>
 
         <!-- Module Header -->
-        <div
-          class="module-header"
-          [class.active]="module.url && isComponentActive(module.url)"
-          [class.has-active-child]="!module.url && hasActiveChild(module)"
-          (click)="onModuleClick($event, module, modulePopover)"
-          [title]="!isVisible() ? module.name : ''"
-        >
-          <div class="module-info">
-            <svg
-              class="module-icon"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              @switch (module.icon) {
-                @case ('home') {
-                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        @if (module.components.length === 0 && module.url) {
+          <a
+            class="module-header"
+            [class.active]="isComponentActive(module.url)"
+            [routerLink]="module.url"
+            [title]="!isVisible() ? module.name : ''"
+          >
+            <div class="module-info">
+              <svg
+                class="module-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                @switch (module.icon) {
+                  @case ('home') {
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  }
+                  @case ('users') {
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  }
+                  @case ('settings') {
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  }
+                  @default {
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                  }
                 }
-                @case ('users') {
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                }
-                @case ('settings') {
-                  <circle cx="12" cy="12" r="3"></circle>
-                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                }
-                @default {
-                  <rect x="3" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="3" width="7" height="7"></rect>
-                  <rect x="14" y="14" width="7" height="7"></rect>
-                  <rect x="3" y="14" width="7" height="7"></rect>
-                }
+              </svg>
+              @if (isVisible()) {
+                <span class="module-name">{{ module.name }}</span>
               }
-            </svg>
-            @if (isVisible()) {
-              <span class="module-name">{{ module.name }}</span>
+            </div>
+          </a>
+        } @else {
+          <div
+            class="module-header"
+            [class.active]="module.url && isComponentActive(module.url)"
+            [class.has-active-child]="!module.url && hasActiveChild(module)"
+            (click)="onModuleClick($event, module, modulePopover)"
+            [title]="!isVisible() ? module.name : ''"
+          >
+            <div class="module-info">
+              <svg
+                class="module-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                @switch (module.icon) {
+                  @case ('home') {
+                    <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                  }
+                  @case ('users') {
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  }
+                  @case ('settings') {
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                  }
+                  @default {
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                  }
+                }
+              </svg>
+              @if (isVisible()) {
+                <span class="module-name">{{ module.name }}</span>
+              }
+            </div>
+
+            @if (isVisible() && module.components.length > 0) {
+              <svg
+                class="expand-icon"
+                [class.expanded]="isModuleExpanded(module.id)"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
             }
           </div>
-
-          @if (isVisible() && module.components.length > 0) {
-            <svg
-              class="expand-icon"
-              [class.expanded]="isModuleExpanded(module.id)"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          }
-        </div>
+        }
 
         <!-- Module Components (Collapsible, expanded mode only) -->
-        @if (isVisible() && module.components.length > 0 && isModuleExpanded(module.id)) {
-          <div class="components-list">
+        @if (isVisible() && module.components.length > 0) {
+          <div class="components-list" [class.expanded]="isModuleExpanded(module.id)">
             @for (component of module.components; track component.url) {
-              <div
+              <a
                 class="component-item"
+                [routerLink]="component.url"
                 [class.active]="isComponentActive(component.url)"
-                (click)="navigateToComponent(component.url)"
               >
                 <span class="component-dot"></span>
                 <span class="component-name">{{ component.name }}</span>
-              </div>
+              </a>
             }
           </div>
         }
@@ -211,15 +258,19 @@
 
         <div class="user-profile" (click)="userPopover.toggle($event)" [title]="!isVisible() ? (currentUser()?.username || currentUser()?.email || 'User') : ''">
           <div class="user-avatar">
-            {{ (currentUser()?.username || currentUser()?.email || 'U')[0].toUpperCase() }}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
           </div>
           @if (isVisible()) {
             <div class="user-info">
               <div class="user-name">{{ currentUser()?.username || currentUser()?.email }}</div>
               <div class="user-email">{{ currentUser()?.email || '' }}</div>
             </div>
-            <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="6 9 12 15 18 9"></polyline>
+            <svg class="dropdown-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="8 9 12 5 16 9"></polyline>
+              <polyline points="8 15 12 19 16 15"></polyline>
             </svg>
           }
         </div>

@@ -1,6 +1,7 @@
 import { Component, computed, ViewChildren, QueryList } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { PopoverModule } from 'primeng/popover';
 import { NavigationService } from '../../../services/navigation.service';
 import { AuthService } from '../../../services/auth.service';
@@ -10,7 +11,7 @@ import { Popover } from 'primeng/popover';
 
 @Component({
   selector: 'app-navigation-panel',
-  imports: [FormsModule, PopoverModule],
+  imports: [FormsModule, PopoverModule, RouterLink],
   templateUrl: './navigation-panel.component.html',
   styleUrl: './navigation-panel.component.scss',
 })

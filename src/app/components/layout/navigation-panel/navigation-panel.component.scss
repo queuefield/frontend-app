@@ -191,6 +191,7 @@ $transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   transition: background-color 0.15s ease;
   white-space: nowrap;
+  text-decoration: none;
 
   .collapsed & {
     justify-content: center;
@@ -257,27 +258,21 @@ $transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding-left: 1rem;
   margin-top: 2px;
   overflow: hidden;
-  animation: expandIn 0.4s ease forwards;
+  max-height: 0;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.expanded {
+    max-height: 800px;
+  }
 
   .component-item {
     animation: fadeSlideIn 0.3s ease both;
 
     @for $i from 1 through 10 {
       &:nth-child(#{$i}) {
-        animation-delay: #{$i * 0.06}s;
+        animation-delay: #{$i * 0.04}s;
       }
     }
-  }
-}
-
-@keyframes expandIn {
-  from {
-    opacity: 0;
-    max-height: 0;
-  }
-  to {
-    opacity: 1;
-    max-height: 500px;
   }
 }
 
@@ -300,6 +295,7 @@ $transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.15s ease;
+  text-decoration: none;
 
   &:hover {
     background: var(--p-surface-50, #f7fafc);
@@ -442,17 +438,19 @@ $transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 // ── User Profile ──
 .user-profile-section {
   position: relative;
-  margin-top: 0.25rem;
+  margin-top: 1rem;
 }
 
 .user-profile {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 12px;
+  border: 1px solid var(--p-surface-200, #e2e8f0);
+  background: var(--p-surface-0, #ffffff);
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: all 0.2s ease;
 
   .collapsed & {
     justify-content: center;
@@ -461,25 +459,26 @@ $transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
     background: var(--p-surface-50, #f7fafc);
+    border-color: var(--p-surface-300, #cbd5e0);
   }
 }
 
 .user-avatar {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(
-    135deg,
-    var(--color-primary, #E21D4B) 0%,
-    #f06292 100%
-  );
+  width: 40px;
+  height: 40px;
+  background: var(--p-surface-100, #edf2f7);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: #ffffff;
   flex-shrink: 0;
+  color: var(--p-surface-500, #718096);
+  
+  svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+  }
 }
 
 .user-info {
@@ -488,17 +487,17 @@ $transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .user-name {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--p-surface-700, #2d3748);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--p-surface-800, #1a202c);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .user-email {
-  font-size: 0.7rem;
-  color: var(--p-surface-400, #a0aec0);
+  font-size: 0.75rem;
+  color: var(--p-surface-500, #718096);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
