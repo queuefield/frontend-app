@@ -13,6 +13,8 @@ import { FileUploaderComponent } from '../shared/file-uploader/file-uploader.com
   [maxFileSize]="2"
   hint="JPG, PNG or WebP (max. 2MB)"
   (filesUploaded)="onAvatarUploaded($event)"
+    (filesDataUploaded)="onFullDataUploaded($event)"
+
 />
   <div class="form-field">
     <app-file-uploader
@@ -21,6 +23,8 @@ import { FileUploaderComponent } from '../shared/file-uploader/file-uploader.com
       [multiple]="true"
       [maxFiles]="3"
       (filesUploaded)="onAvatarUploadeds($event)"
+        (filesDataUploaded)="onFullDataUploaded($event)"
+
     />
   </div>
   `,
@@ -34,6 +38,9 @@ export class GeneralSettingsComponent {
     console.log(event);
   }
   onAvatarUploadeds(event: any){
+    console.log(event);
+  }
+  onFullDataUploaded(event: any){
     console.log(event);
   }
 }

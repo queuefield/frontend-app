@@ -58,6 +58,8 @@ export class FileUploaderComponent {
   // ── Outputs ──
   /** Emits the list of successfully uploaded GUIDs whenever it changes */
   readonly filesUploaded = output<string[]>();
+  /** Emits the list of successfully uploaded file items whenever it changes */
+  readonly filesDataUploaded = output<UploadFileItem[]>();
   /** Emits when a file is deleted */
   readonly fileDeleted = output<string>();
 
@@ -90,6 +92,10 @@ export class FileUploaderComponent {
     return this.files()
       .filter((f) => f.status === 'success' && f.guid)
       .map((f) => f.guid!);
+  }
+
+  get successfulFiles(): UploadFileItem[] {
+    return this.files().filter((f) => f.status === 'success' && f.guid);
   }
 
   // ── Drag & Drop ──
@@ -342,17 +348,17 @@ export class FileUploaderComponent {
   }
 
   private extractGuid(res: any): string {
-    const guid = res?.data?.id || res?.data || res?.id || res;
+    const guid = res?.data?.fileId || res?.data?.id || res?.data || res?.id || res;
     return typeof guid === 'string' ? guid : JSON.stringify(guid);
   }
 
   private extractGuids(res: any, count: number): string[] {
     // Try common response shapes
-    const list = res?.data || res?.ids || res?.files || res;
+    const list = res?.data?.fileIds || res?.data || res?.ids || res?.files || res;
     if (Array.isArray(list)) {
       return list.map((item: any) => {
         if (typeof item === 'string') return item;
-        return item?.id || item?.data || JSON.stringify(item);
+        return item?.fileId || item?.id || item?.data || JSON.stringify(item);
       });
     }
     // Fallback: if single guid returned, replicate
@@ -406,12 +412,12 @@ export class FileUploaderComponent {
       this.uploadService.uploadSingle(payload).subscribe({
         next: (res: any) => {
           clearInterval(progressInterval);
-          const guid = res?.data?.id || res?.data || res?.id || res;
+          const guid = this.extractGuid(res);
           this.updateFileItem(index, {
             status: 'success',
             progress: 100,
             uploadedBytes: item.fileSize,
-            guid: typeof guid === 'string' ? guid : JSON.stringify(guid),
+            guid,
           });
           this.emitGuids();
         },
@@ -465,6 +471,7 @@ export class FileUploaderComponent {
 
   private emitGuids(): void {
     this.filesUploaded.emit(this.successfulGuids);
+    this.filesDataUploaded.emit(this.successfulFiles);
   }
 
   // ── Utilities ──
