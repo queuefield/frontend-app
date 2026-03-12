@@ -103,8 +103,8 @@ export class AddEditStoreComponent implements OnInit {
     const tab = this.activeTab();
     if (tab === 0) {
       const storeInvalid = this.tab1RequiredFields
-        .filter(f => this.storeForm?.get(f.field)?.invalid)
-        .map(f => f.label);
+        .filter((f) => this.storeForm?.get(f.field)?.invalid)
+        .map((f) => f.label);
 
       // Check contact fields
       const contacts = this.contacts;
@@ -118,8 +118,8 @@ export class AddEditStoreComponent implements OnInit {
     }
     if (tab === 1) {
       return this.tab2RequiredFields
-        .filter(f => this.legalForm?.get(f.field)?.invalid)
-        .map(f => f.label);
+        .filter((f) => this.legalForm?.get(f.field)?.invalid)
+        .map((f) => f.label);
     }
     if (tab === 2) {
       const branchInvalid: string[] = [];
@@ -145,22 +145,22 @@ export class AddEditStoreComponent implements OnInit {
   }
 
   toggleValidationInfo(): void {
-    this.showValidationInfo.update(v => !v);
+    this.showValidationInfo.update((v) => !v);
   }
 
   private updateValidationState(): void {
     // Tab 1: store form fields + contacts
-    const tab1 = this.tab1RequiredFields.every(f => this.storeForm?.get(f.field)?.valid)
-      && this.contacts?.controls?.every((c: any) => c.valid) !== false;
+    const tab1 =
+      this.tab1RequiredFields.every((f) => this.storeForm?.get(f.field)?.valid) &&
+      this.contacts?.controls?.every((c: any) => c.valid) !== false;
     this.isTab1Valid.set(tab1);
 
     // Tab 2: legal form fields
-    const tab2 = this.tab2RequiredFields.every(f => this.legalForm?.get(f.field)?.valid);
+    const tab2 = this.tab2RequiredFields.every((f) => this.legalForm?.get(f.field)?.valid);
     this.isTab2Valid.set(tab2);
 
     // Tab 3: at least 1 branch + all branches valid
-    const tab3 = this.branches?.length > 0
-      && this.branches.controls.every((b: any) => b.valid);
+    const tab3 = this.branches?.length > 0 && this.branches.controls.every((b: any) => b.valid);
     this.isTab3Valid.set(tab3);
 
     const tab = this.activeTab();
@@ -189,15 +189,21 @@ export class AddEditStoreComponent implements OnInit {
   }
 
   private loadLookups(): void {
-    this.lookupsService.getLookup(LookupType.Categories).subscribe(res => this.categories.set(res));
-    this.lookupsService.getLookup(LookupType.Countries).subscribe(res => this.countries.set(res));
+    this.lookupsService
+      .getLookup(LookupType.Categories)
+      .subscribe((res) => this.categories.set(res));
+    this.lookupsService.getLookup(LookupType.Countries).subscribe((res) => this.countries.set(res));
     // Regions and cities are loaded dynamically based on selections
-    this.lookupsService.getLookup(LookupType.SalesAgents).subscribe(res => this.salesAgents.set(res));
-    this.lookupsService.getLookup(LookupType.SupportAgents).subscribe(res => this.supportAgents.set(res));
-    this.lookupsService.getLookup(LookupType.Plans).subscribe(res => this.plans.set(res));
-    this.lookupsService.getLookup(LookupType.Sources).subscribe(res => this.sources.set(res));
-    this.lookupsService.getLookup(LookupType.Statuses).subscribe(res => this.statuses.set(res));
-    this.lookupsService.getLookup(LookupType.Zones).subscribe(res => this.zones.set(res));
+    this.lookupsService
+      .getLookup(LookupType.SalesAgents)
+      .subscribe((res) => this.salesAgents.set(res));
+    this.lookupsService
+      .getLookup(LookupType.SupportAgents)
+      .subscribe((res) => this.supportAgents.set(res));
+    this.lookupsService.getLookup(LookupType.Plans).subscribe((res) => this.plans.set(res));
+    this.lookupsService.getLookup(LookupType.Sources).subscribe((res) => this.sources.set(res));
+    this.lookupsService.getLookup(LookupType.Statuses).subscribe((res) => this.statuses.set(res));
+    this.lookupsService.getLookup(LookupType.Zones).subscribe((res) => this.zones.set(res));
   }
 
   private initForms(): void {
@@ -233,9 +239,9 @@ export class AddEditStoreComponent implements OnInit {
     this.addBranch();
 
     // Fetch Regions when Country changes
-    this.storeForm.get('countryId')?.valueChanges.subscribe(countryId => {
+    this.storeForm.get('countryId')?.valueChanges.subscribe((countryId) => {
       if (countryId) {
-        this.lookupsService.getLookup(LookupType.Regions, countryId).subscribe(res => {
+        this.lookupsService.getLookup(LookupType.Regions, countryId).subscribe((res) => {
           this.regions.set(res);
         });
       } else {
@@ -300,14 +306,19 @@ export class AddEditStoreComponent implements OnInit {
       salesAgentId: data.salesAgentId,
       supportAgentId: data.supportAgentId,
       planId: data.planId,
-      subscriptionStartDate: data.subscriptionStartDate ? new Date(data.subscriptionStartDate) : null,
-      subscriptionExpireDate: data.subscriptionExpireDate ? new Date(data.subscriptionExpireDate) : null,
+      subscriptionStartDate: data.subscriptionStartDate
+        ? new Date(data.subscriptionStartDate)
+        : null,
+      subscriptionExpireDate: data.subscriptionExpireDate
+        ? new Date(data.subscriptionExpireDate)
+        : null,
     });
 
     // Patch file IDs
     if (data.logoFileId) this.logoFileId.set(data.logoFileId);
     if (data.legalDocumentFileIds) this.legalDocumentFileIds.set(data.legalDocumentFileIds);
-    if (data.contractDocumentFileIds) this.contractDocumentFileIds.set(data.contractDocumentFileIds);
+    if (data.contractDocumentFileIds)
+      this.contractDocumentFileIds.set(data.contractDocumentFileIds);
 
     // Patch branches
     this.branches.clear();
@@ -323,6 +334,7 @@ export class AddEditStoreComponent implements OnInit {
   // ── Contact Management ──
   addContact(data?: any): void {
     const contactGroup = this.fb.group({
+      id: [data?.id || 0],
       name: [data?.name || '', Validators.required],
       title: [data?.title || '', Validators.required],
       phone: [data?.phone || '', Validators.required],
@@ -363,7 +375,7 @@ export class AddEditStoreComponent implements OnInit {
     this.branches.push(branchGroup);
 
     // Fetch Cities when Region changes for this branch
-    branchGroup.get('regionId')?.valueChanges.subscribe(regionId => {
+    branchGroup.get('regionId')?.valueChanges.subscribe((regionId) => {
       if (regionId) {
         this.loadCitiesForRegion(regionId);
       }
@@ -382,10 +394,10 @@ export class AddEditStoreComponent implements OnInit {
   loadCitiesForRegion(regionId: string | number): void {
     if (this.citiesByRegion()[regionId.toString()]) return;
 
-    this.lookupsService.getLookup(LookupType.Cities, regionId).subscribe(res => {
-      this.citiesByRegion.update(prev => ({
+    this.lookupsService.getLookup(LookupType.Cities, regionId).subscribe((res) => {
+      this.citiesByRegion.update((prev) => ({
         ...prev,
-        [regionId.toString()]: res
+        [regionId.toString()]: res,
       }));
     });
   }
@@ -427,7 +439,11 @@ export class AddEditStoreComponent implements OnInit {
 
   // ── Tab Navigation ──
   goToTab(index: number): void {
-    if (index === 0 || (index === 1 && this.isTab1Valid()) || (index === 2 && this.isTab1Valid() && this.isTab2Valid())) {
+    if (
+      index === 0 ||
+      (index === 1 && this.isTab1Valid()) ||
+      (index === 2 && this.isTab1Valid() && this.isTab2Valid())
+    ) {
       this.activeTab.set(index);
       this.updateValidationState();
       this.showValidationInfo.set(false);
@@ -473,13 +489,14 @@ export class AddEditStoreComponent implements OnInit {
       nameEn: storeData.nameEn,
       categoryId: storeData.categoryId,
       countryId: storeData.countryId,
-      regionId: storeData.regionId,
-      cityId: storeData.cityId,
-      contact: {
-        name: primaryContact.name || '',
-        title: primaryContact.title || '',
-        phone: primaryContact.phone || '',
-      },
+      regionId: storeData.regionId || 1,
+      cityId: storeData.cityId || 1,
+      contacts: storeData.contacts.map((c: any) => ({
+        id: c.id || 0,
+        name: c.name || '',
+        title: c.title || '',
+        phone: c.phone || '',
+      })),
       headOfficeAddress: storeData.headOfficeAddress,
       headOfficeLocation: storeData.headOfficeLocation,
       lat: storeData.lat,
@@ -487,14 +504,17 @@ export class AddEditStoreComponent implements OnInit {
       hotline: primaryContact.hotline || storeData.hotline || '',
       salesAgentId: legalData.salesAgentId,
       supportAgentId: legalData.supportAgentId,
-      sourceId: storeData.sourceId,
+      sourceId: storeData.sourceId || 1,
       planId: legalData.planId,
-      subscriptionStartDate: legalData.subscriptionStartDate?.toISOString() || null,
-      subscriptionExpireDate: legalData.subscriptionExpireDate?.toISOString() || null,
+      subscriptionStartDate:
+        legalData.subscriptionStartDate?.toISOString() || new Date().toISOString(),
+      subscriptionExpireDate:
+        legalData.subscriptionExpireDate?.toISOString() ||
+        new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(), //next date
       logoFileId: this.logoFileId(),
       legalDocumentFileIds: this.legalDocumentFileIds(),
       contractDocumentFileIds: this.contractDocumentFileIds(),
-      statusId: storeData.statusId,
+      statusId: storeData.statusId || 1,
       branches: storeData.branches.map((b: any) => ({
         id: b.id || 0,
         nameAr: b.nameAr,
@@ -513,6 +533,8 @@ export class AddEditStoreComponent implements OnInit {
         isActive: b.isActive,
       })),
     };
+    console.log(storeData);
+    console.log(payload);
 
     const request$ = this.isEditMode()
       ? this.tenantService.update(this.editId()!, payload)
