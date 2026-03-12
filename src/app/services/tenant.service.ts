@@ -8,7 +8,7 @@ import { HttpService } from './http.service';
 export class TenantService {
   private http = inject(HttpService);
 
-  private readonly BASE = 'api/v1/tenant';
+  private readonly BASE = '/api/v1/tenant';
 
   /** Create a new tenant (store) */
   create(payload: any): Observable<any> {

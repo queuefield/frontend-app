@@ -4,10 +4,10 @@
   "locale": "en-US",
   "timezone": "America/New_York",
   "apiUrls": {
-    "baseUrl": "https://api.dev.storru.com/",
-    "authUrl": "https://api.dev.storru.com/",
-    "userUrl": "https://api.dev.storru.com/",
-    "dataUrl": "https://api.dev.storru.com/"
+    "baseUrl": "https://api.dev.storru.com",
+    "authUrl": "https://api.dev.storru.com",
+    "userUrl": "https://api.dev.storru.com",
+    "dataUrl": "https://api.dev.storru.com"
   },
   "features": {
     "enableAnalytics": true,

@@ -51,11 +51,7 @@
 
     <!-- Export Button -->
     @if (showExportBtn) {
-      <button
-        type="button"
-        (click)="onExportAction.emit()"
-        class="grid-toolbar__export-btn"
-      >
+      <button type="button" (click)="onExportAction.emit()" class="grid-toolbar__export-btn">
         <i class="pi pi-download"></i>
         <span>Export</span>
       </button>
@@ -63,11 +59,7 @@
 
     <!-- Add Button -->
     @if (showAddBtn) {
-      <button
-        type="button"
-        (click)="onAddAction.emit()"
-        class="grid-toolbar__add-btn"
-      >
+      <button type="button" (click)="onAddAction.emit()" class="grid-toolbar__add-btn">
         <i class="pi pi-plus"></i>
         <span>{{ options()['addLabel'] || 'Add' }}</span>
       </button>
@@ -151,25 +143,66 @@
               }
             </div>
           }
+
+          <!-- Split cell -->
+          @if (col.customCell === 'split') {
+            <div
+              class="split-cell"
+              [class.clickable]="!!col.action"
+              (click)="col.action ? onCellClick(row, col) : null"
+            >
+              <span class="split-cell__primary">{{ getSplitFieldValue(row, col, 0) }}</span>
+              <span class="split-cell__secondary">{{ getSplitFieldValue(row, col, 1) }}</span>
+            </div>
+          }
+
+          <!-- Date Split cell -->
+          @if (col.customCell === 'dateSplit') {
+            <div
+              class="split-cell"
+              [class.clickable]="!!col.action"
+              (click)="col.action ? onCellClick(row, col) : null"
+            >
+              <span class="split-cell__primary">{{ getDateSplit(row, col).date }}</span>
+              <span class="split-cell__secondary">{{ getDateSplit(row, col).time }}</span>
+            </div>
+          }
+
+          <!-- Status Tag cell -->
+          @if (col.customCell === 'statusTag') {
+            <div
+              class="status-tag-cell"
+              [class.clickable]="!!col.action"
+              (click)="col.action ? onCellClick(row, col) : null"
+            >
+              <span class="status-tag">
+                <span
+                  class="status-tag__dot"
+                  [style.backgroundColor]="getStatusDotColor(getFieldValue(row, col), col)"
+                ></span>
+                <span class="status-tag__text">{{ getFieldValue(row, col) }}</span>
+              </span>
+            </div>
+          }
         </td>
       }
 
       <!-- Actions Column -->
       @if (actions().length > 0 || showViewIcon) {
-        <td style="width: 90px; text-align: center; white-space: nowrap;">
+        <td style="width: 90px; text-align: center; white-space: nowrap">
           <!-- View Icon -->
           @if (showViewIcon) {
-             <button
-               type="button"
-               (click)="onViewAction.emit(row)"
-               class="action-trigger action-trigger--view"
-               pTooltip="View Details"
-               tooltipPosition="top"
-             >
-               <i class="pi pi-eye"></i>
-             </button>
+            <button
+              type="button"
+              (click)="onViewAction.emit(row)"
+              class="action-trigger action-trigger--view"
+              pTooltip="View Details"
+              tooltipPosition="top"
+            >
+              <i class="pi pi-eye"></i>
+            </button>
           }
-          
+
           <!-- Three Dots Menu -->
           @if (actions().length > 0) {
             <button

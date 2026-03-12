@@ -130,7 +130,7 @@ export class AppConfigService {
    * Get specific third-party config value
    */
   getThirdPartyValue<K extends keyof AppConfig['thirdParty']>(
-    key: K
+    key: K,
   ): AppConfig['thirdParty'][K] | undefined {
     return this.config()?.thirdParty[key];
   }
@@ -195,6 +195,6 @@ export class AppConfigService {
    * Get login endpoint
    */
   getLoginEndpoint(): string {
-    return this.config()?.authentication.loginEndpoint || 'api/v1/customer/auth/login';
+    return this.config()?.authentication.loginEndpoint || '/api/v1/customer/auth/login';
   }
 }

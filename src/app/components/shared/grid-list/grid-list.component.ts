@@ -174,11 +174,9 @@ export class GridListComponent implements OnInit, OnDestroy {
 
     // Setup global search debounce
     this.subscriptions.add(
-      this.searchSubject
-        .pipe(debounceTime(1000), distinctUntilChanged())
-        .subscribe((searchKey) => {
-          this.onGlobalSearchDebounced(searchKey);
-        })
+      this.searchSubject.pipe(debounceTime(1000), distinctUntilChanged()).subscribe((searchKey) => {
+        this.onGlobalSearchDebounced(searchKey);
+      }),
     );
 
     // Initial data load
@@ -233,9 +231,11 @@ export class GridListComponent implements OnInit, OnDestroy {
 
       count++;
       const display = Array.isArray(val)
-        ? val.map((v) => (typeof v === 'object' ? (v as any)?.nameEn ?? JSON.stringify(v) : v)).join(', ')
+        ? val
+            .map((v) => (typeof v === 'object' ? ((v as any)?.nameEn ?? JSON.stringify(v)) : v))
+            .join(', ')
         : typeof val === 'object'
-          ? (val as any)?.nameEn ?? JSON.stringify(val)
+          ? ((val as any)?.nameEn ?? JSON.stringify(val))
           : String(val);
       lines.push(`${key}: ${display}`);
     }
@@ -269,7 +269,7 @@ export class GridListComponent implements OnInit, OnDestroy {
         error: () => {
           this.loading.set(false);
         },
-      })
+      }),
     );
   }
 
@@ -298,7 +298,7 @@ export class GridListComponent implements OnInit, OnDestroy {
         error: () => {
           this.loading.set(false);
         },
-      })
+      }),
     );
   }
 
@@ -442,6 +442,42 @@ export class GridListComponent implements OnInit, OnDestroy {
     return [];
   }
 
+  getSplitFieldValue(row: any, col: ColumnsInterface, index: number): string {
+    if (Array.isArray(col.field) && col.field.length > index) {
+      const fieldName =
+        typeof col.field[index] === 'string'
+          ? col.field[index]
+          : (col.field[index] as FieldLabel).label;
+      return row[fieldName as string] ?? '';
+    }
+    return '';
+  }
+
+  getDateSplit(row: any, col: ColumnsInterface): { date: string; time: string } {
+    const val = this.getFieldValue(row, col);
+    if (!val) return { date: '', time: '' };
+    const d = new Date(val);
+    if (isNaN(d.getTime())) return { date: val, time: '' };
+
+    return {
+      date: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      time: d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }),
+    };
+  }
+
+  getStatusDotColor(status: string, col: ColumnsInterface): string {
+    const s = (status || '').trim();
+    if (col.statusMap && col.statusMap[s]) {
+      return col.statusMap[s];
+    }
+    // Fallback static classes if not provided
+    const lower = s.toLowerCase();
+    if (lower.includes('active') && !lower.includes('inactive')) return '#10b981';
+    if (lower.includes('inactive')) return '#9ca3af';
+    if (lower.includes('block')) return '#ef4444';
+    return 'var(--p-primary-color)';
+  }
+
   onCellClick(row: any, col: ColumnsInterface): void {
     if (col.action) {
       col.action(row);
@@ -481,7 +517,7 @@ export class GridListComponent implements OnInit, OnDestroy {
           perms = user.permissions;
         }
       }
-      
+
       // 2. Try to get from local storage by module name directly
       if ((!perms || !perms.length) && this.moduleName()) {
         const modulePerms = localStorage.getItem(this.moduleName()!);
@@ -492,15 +528,15 @@ export class GridListComponent implements OnInit, OnDestroy {
     } catch (e) {}
 
     if (!perms || !Array.isArray(perms) || perms.length === 0) {
-      return false; 
+      return false;
     }
 
     const check1 = actionCheck.toLowerCase();
     const check2 = this.moduleName() ? `${this.moduleName()!.toLowerCase()}_${check1}` : '';
-    
-    return perms.some(p => {
-       const pLower = p.toLowerCase();
-       return pLower === check1 || (check2 && pLower === check2);
+
+    return perms.some((p) => {
+      const pLower = p.toLowerCase();
+      return pLower === check1 || (check2 && pLower === check2);
     });
   }
 
@@ -513,7 +549,10 @@ export class GridListComponent implements OnInit, OnDestroy {
         return false;
       }
       // 2. String-based permission check from Auth
-      const actionName = action.permission || action.name || (action.isEdit ? 'edit' : action.isDelete ? 'delete' : action.isBlock ? 'block' : '');
+      const actionName =
+        action.permission ||
+        action.name ||
+        (action.isEdit ? 'edit' : action.isDelete ? 'delete' : action.isBlock ? 'block' : '');
       if (actionName && !this.hasPermission(actionName, action.permission)) {
         return false;
       }

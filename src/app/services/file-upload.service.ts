@@ -20,9 +20,9 @@ export interface MultipleFileUploadPayload {
 export class FileUploadService {
   private http = inject(HttpService);
 
-  private readonly UPLOAD_SINGLE = 'api/v1/customer/file/upload';
-  private readonly UPLOAD_MULTIPLE = 'api/v1/customer/file/upload-multiple';
-  private readonly DELETE_FILE = 'api/v1/customer/file';
+  private readonly UPLOAD_SINGLE = '/api/v1/customer/file/upload';
+  private readonly UPLOAD_MULTIPLE = '/api/v1/customer/file/upload-multiple';
+  private readonly DELETE_FILE = '/api/v1/customer/file';
 
   /**
    * Upload a single file. Returns a GUID on success.

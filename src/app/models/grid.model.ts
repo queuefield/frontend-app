@@ -25,14 +25,16 @@ export interface FieldLabel {
 }
 
 export interface ColumnsInterface {
-  /** Simple string field name OR array of FieldLabel for multiLabel cells */
-  field: string | FieldLabel[];
+  /** Simple string field name OR array of FieldLabel for multiLabel cells OR string[] for split */
+  field: string | string[] | FieldLabel[];
   /** Translation key for column header */
   header: string;
   /** CSS width e.g. '130px' */
   width?: string;
-  /** Custom cell renderer type: 'multiLabel' | 'tags' */
+  /** Custom cell renderer type: 'multiLabel' | 'tags' | 'split' | 'dateSplit' | 'statusTag' */
   customCell?: string;
+  /** Lookup map for status string -> color dot hex/rgba (e.g. { 'Active': '#10b981' }) */
+  statusMap?: Record<string, string>;
   /** Click action for the cell (e.g. navigate) */
   action?: (row: any) => void;
 }
