@@ -7,13 +7,15 @@ import { LoaderService } from '../services/loader.service';
 const EXCLUDED_URLS: string[] = [
   // '/api/v1/notifications/polling',
   // '/api/v1/silent-health'
+  'api/v1/customer/file/upload-multiple',
+  'api/v1/customer/file/upload',
 ];
 
 export const apiLoaderInterceptor: HttpInterceptorFn = (req, next) => {
   const loaderService = inject(LoaderService);
 
   // Check if current URL is in the excluded list
-  const isExcluded = EXCLUDED_URLS.some(url => req.url.includes(url));
+  const isExcluded = EXCLUDED_URLS.some((url) => req.url.includes(url));
 
   if (!isExcluded) {
     loaderService.show();
@@ -24,6 +26,6 @@ export const apiLoaderInterceptor: HttpInterceptorFn = (req, next) => {
       if (!isExcluded) {
         loaderService.hide();
       }
-    })
+    }),
   );
 };

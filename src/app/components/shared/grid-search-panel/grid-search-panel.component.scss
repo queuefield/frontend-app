@@ -135,13 +135,27 @@
     }
 
     &--apply {
-      background: var(--p-surface-100, #edf2f7);
-      border: 1px solid var(--p-surface-200, #e2e8f0);
-      color: var(--p-surface-400, #a0aec0);
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.125rem;
+      background: var(--color-primary, var(--p-primary-color));
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #ffffff;
+      cursor: pointer;
+      transition:
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+      white-space: nowrap;
+      i {
+        font-size: 0.875rem;
+      }
 
       &:hover {
-        background: var(--p-surface-200, #e2e8f0);
-        color: var(--p-surface-600, #4a5568);
+        opacity: 0.9;
+        box-shadow: 0 2px 8px rgba(226, 29, 75, 0.25);
       }
     }
   }
